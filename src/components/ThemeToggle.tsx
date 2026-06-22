@@ -11,7 +11,7 @@ function getInitialTheme(): 'light' | 'dark' {
 }
 
 function applyTheme(theme: 'light' | 'dark') {
-  document.documentElement.setAttribute('data-theme', theme)
+  document.documentElement.classList.toggle('dark', theme === 'dark')
   try { localStorage.setItem(STORAGE_KEY, theme) } catch { /* ignore */ }
 }
 

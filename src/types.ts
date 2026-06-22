@@ -40,4 +40,6 @@ export interface ImprovementItem {
   dueDate?: number
   /** Team upvote count for priority sorting */
   votes?: number
+  /** URL of the promoted Change Planner item for back-link badge */
+  changeplannerUrl?: string
 }

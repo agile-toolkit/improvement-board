@@ -11,6 +11,7 @@ interface Props {
   onItems: (items: ImprovementItem[]) => void
   onVote: (id: string) => void
   onResetVotes: () => void
+  onPromote: (id: string) => void
   currentSprint: number
   onEndSprint: () => void
 }
@@ -19,9 +20,9 @@ const STATUSES: ImprovementStatus[] = ['identified', 'in_progress', 'done']
 const CATEGORIES: Category[] = ['process', 'technical', 'people', 'product', 'other']
 
 const STATUS_COLORS: Record<ImprovementStatus, string> = {
-  identified: 'bg-slate-100 border-slate-300',
-  in_progress: 'bg-amber-50 border-amber-200',
-  done: 'bg-green-50 border-green-200',
+  identified: 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600',
+  in_progress: 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-700',
+  done: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700',
 }
 
 const CAT_BADGE: Record<Category, string> = {
@@ -34,7 +35,7 @@ const CAT_BADGE: Record<Category, string> = {
 
 type SortMode = 'default' | 'due' | 'stale' | 'votes'
 
-export default function ImprovementBoard({ items, members, onItems, onVote, onResetVotes, currentSprint, onEndSprint }: Props) {
+export default function ImprovementBoard({ items, members, onItems, onVote, onResetVotes, onPromote, currentSprint, onEndSprint }: Props) {
   const { t } = useTranslation()
   const [adding, setAdding] = useState(false)
   const [sortMode, setSortMode] = useState<SortMode>('default')
@@ -134,18 +135,18 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl font-bold text-slate-800">{t('kanban.title')}</h2>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-gray-50">{t('kanban.title')}</h2>
           <span className="text-xs bg-brand-100 text-brand-700 px-2 py-0.5 rounded-full font-medium">
             {t('board.sprint_count', { n: currentSprint })}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+          <div className="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-xs">
             <button
               type="button"
               onClick={() => setSortMode('default')}
               className={`px-3 py-1.5 font-medium transition-colors ${
-                sortMode === 'default' ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-50'
+                sortMode === 'default' ? 'bg-brand-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               {t('board.sort_default')}
@@ -153,8 +154,8 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             <button
               type="button"
               onClick={() => setSortMode('due')}
-              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 ${
-                sortMode === 'due' ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-50'
+              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 dark:border-slate-700 ${
+                sortMode === 'due' ? 'bg-brand-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               {t('board.sort_due')}
@@ -162,8 +163,8 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             <button
               type="button"
               onClick={() => setSortMode('stale')}
-              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 ${
-                sortMode === 'stale' ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-50'
+              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 dark:border-slate-700 ${
+                sortMode === 'stale' ? 'bg-brand-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               {t('board.sort_stale_first')}
@@ -171,8 +172,8 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             <button
               type="button"
               onClick={() => setSortMode('votes')}
-              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 ${
-                sortMode === 'votes' ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-50'
+              className={`px-3 py-1.5 font-medium transition-colors border-l border-slate-200 dark:border-slate-700 ${
+                sortMode === 'votes' ? 'bg-brand-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               {t('board.sort_votes')}
@@ -184,7 +185,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
               onClick={() => {
                 if (window.confirm(t('board.reset_votes_confirm'))) onResetVotes()
               }}
-              className="border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+              className="border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
               {t('board.reset_votes')}
             </button>
@@ -193,7 +194,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             href={buildKanbanUrl(items)}
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+            className="border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             title={t('board.open_kanban_designer_title')}
           >
             {t('board.open_kanban_designer')}
@@ -202,7 +203,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             type="button"
             onClick={handleExport}
             disabled={exportState === 'busy'}
-            className="border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {exportState === 'busy'
               ? t('board.export_downloading')
@@ -219,7 +220,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
                   onEndSprint()
                 }
               }}
-              className="border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+              className="border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
               {t('board.end_sprint')}
             </button>
@@ -235,27 +236,27 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
       </div>
 
       {adding && (
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-3">
+        <div className="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-xl p-4 shadow-sm space-y-3">
           <input
             type="text"
             autoFocus
             value={form.title}
             placeholder={t('kanban.itemTitlePlaceholder')}
             onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+            className="w-full border border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
           />
           <textarea
             value={form.description}
             placeholder={t('kanban.descriptionPlaceholder')}
             rows={2}
             onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 resize-none"
+            className="w-full border border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 resize-none"
           />
           <div className="flex gap-3 flex-wrap">
             <select
               value={form.category}
               onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))}
-              className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+              className="border border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
             >
               {CATEGORIES.map(c => (
                 <option key={c} value={c}>
@@ -267,7 +268,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
               <select
                 value={form.copilotName}
                 onChange={e => setForm(f => ({ ...f, copilotName: e.target.value }))}
-                className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="border border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               >
                 <option value="">{t('kanban.noCopilot')}</option>
                 {members.map(m => (
@@ -281,7 +282,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
               type="date"
               value={form.dueDateStr}
               onChange={e => setForm(f => ({ ...f, dueDateStr: e.target.value }))}
-              className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+              className="border border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               placeholder={t('add_form.label_due_date')}
             />
           </div>
@@ -296,7 +297,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
             <button
               type="button"
               onClick={() => setAdding(false)}
-              className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors"
+              className="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors"
             >
               {t('kanban.cancel')}
             </button>
@@ -307,9 +308,9 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
       <div ref={boardRef} className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {STATUSES.map(status => (
           <div key={status} className={`rounded-xl border-2 p-3 ${STATUS_COLORS[status]}`}>
-            <h3 className="font-semibold text-slate-700 text-sm mb-3 flex items-center justify-between">
+            <h3 className="font-semibold text-slate-700 dark:text-slate-300 text-sm mb-3 flex items-center justify-between">
               <span>{t(`board.${status}`)}</span>
-              <span className="bg-white text-slate-500 text-xs rounded-full px-2 py-0.5">
+              <span className="bg-white dark:bg-gray-800 text-slate-500 dark:text-slate-400 text-xs rounded-full px-2 py-0.5">
                 {items.filter(i => i.status === status).length}
               </span>
             </h3>
@@ -325,11 +326,12 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
                   onDelete={deleteItem}
                   onOutcome={updateOutcome}
                   onVote={onVote}
+                  onPromote={onPromote}
                   t={t}
                 />
               ))}
               {items.filter(i => i.status === status).length === 0 && (
-                <p className="text-slate-400 text-xs italic text-center py-2">{t('kanban.noItems')}</p>
+                <p className="text-slate-400 dark:text-slate-500 text-xs italic text-center py-2">{t('kanban.noItems')}</p>
               )}
             </div>
           </div>
@@ -348,6 +350,7 @@ function ItemCard({
   onDelete,
   onOutcome,
   onVote,
+  onPromote,
   t,
 }: {
   item: ImprovementItem
@@ -358,6 +361,7 @@ function ItemCard({
   onDelete: (id: string) => void
   onOutcome: (id: string, o: string) => void
   onVote: (id: string) => void
+  onPromote: (id: string) => void
   t: (k: string, opts?: Record<string, unknown>) => string
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -367,19 +371,19 @@ function ItemCard({
   const daysOld = ageDaysOld(item.updatedAt)
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-3">
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-slate-200 dark:border-gray-700 shadow-sm p-3">
       <div className="flex items-start justify-between gap-2">
         <button
           type="button"
           onClick={() => setExpanded(v => !v)}
-          className="text-sm font-medium text-slate-800 text-left flex-1 hover:text-brand-700"
+          className="text-sm font-medium text-slate-800 dark:text-gray-100 text-left flex-1 hover:text-brand-700 dark:hover:text-brand-400"
         >
           {item.title}
         </button>
         <button
           type="button"
           onClick={() => onDelete(item.id)}
-          className="text-slate-300 hover:text-red-400 text-base leading-none shrink-0"
+          className="text-slate-300 dark:text-gray-600 hover:text-red-400 text-base leading-none shrink-0"
         >
           ×
         </button>
@@ -401,7 +405,7 @@ function ItemCard({
           />
         )}
         {(copilot || item.copilot) && (
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-400 dark:text-slate-500">
             👤 {copilot?.name ?? item.copilot}
           </span>
         )}
@@ -415,28 +419,43 @@ function ItemCard({
           </span>
         )}
         {(item.comments?.length ?? 0) > 0 && (
-          <span className="text-xs text-slate-400">💬 {item.comments!.length}</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500">💬 {item.comments!.length}</span>
         )}
         <button
           type="button"
           onClick={() => onVote(item.id)}
           title={t('board.vote')}
-          className="flex items-center gap-0.5 text-xs text-slate-400 hover:text-brand-600 transition-colors ml-auto"
+          className="flex items-center gap-0.5 text-xs text-slate-400 dark:text-slate-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors ml-auto"
         >
           <span>▲</span>
-          <span className={item.votes ? 'text-brand-600 font-semibold' : ''}>{item.votes ?? 0}</span>
+          <span className={item.votes ? 'text-brand-600 dark:text-brand-400 font-semibold' : ''}>{item.votes ?? 0}</span>
         </button>
       </div>
+      {item.changeplannerUrl && (
+        <div className="mt-1.5">
+          <a
+            href={item.changeplannerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+          >
+            <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              <path d="M7 2h3v3M10 2L6 6M5 3H2v7h7V7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {t('board.promoted_cp')}
+          </a>
+        </div>
+      )}
       {expanded && (
         <div className="mt-2 space-y-2">
-          {item.description && <p className="text-xs text-slate-500">{item.description}</p>}
+          {item.description && <p className="text-xs text-slate-500 dark:text-slate-400">{item.description}</p>}
           {item.status === 'done' && (
             <textarea
               value={item.outcome ?? ''}
               placeholder={t('kanban.outcomePlaceholder')}
               rows={2}
               onChange={e => onOutcome(item.id, e.target.value)}
-              className="w-full text-xs border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-brand-400 resize-none"
+              className="w-full text-xs border border-slate-200 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-brand-400 resize-none"
             />
           )}
           <div className="flex gap-1 flex-wrap">
@@ -447,11 +466,22 @@ function ItemCard({
                   key={s}
                   type="button"
                   onClick={() => onMove(item.id, s)}
-                  className="text-xs border border-slate-200 hover:bg-slate-50 px-2 py-0.5 rounded transition-colors"
+                  className="text-xs border border-slate-200 dark:border-gray-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-700 px-2 py-0.5 rounded transition-colors"
                 >
                   → {t(`board.${s}`)}
                 </button>
               ))}
+            <button
+              type="button"
+              onClick={() => onPromote(item.id)}
+              title={t('board.promote_to_cp_title')}
+              className="text-xs border border-slate-200 dark:border-gray-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-700 px-2 py-0.5 rounded transition-colors flex items-center gap-1"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M6 9V3M3 6l3-3 3 3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {t('board.promote_to_cp')}
+            </button>
           </div>
         </div>
       )}

@@ -72,7 +72,10 @@
     "vote": "Votar por este elemento",
     "sort_votes": "Más votados",
     "reset_votes": "Restablecer votos",
-    "reset_votes_confirm": "¿Restablecer todos los conteos de votos a cero?"
+    "reset_votes_confirm": "¿Restablecer todos los conteos de votos a cero?",
+    "promote_to_cp": "Promover a Change Planner",
+    "promote_to_cp_title": "Escalar este elemento como iniciativa de cambio en Change Planner (nueva pestaña)",
+    "promoted_cp": "En Change Planner"
   },
   "add_form": {
     "title": "Nuevo Ítem de Mejora",

@@ -16,16 +16,17 @@ interface Props {
   onDelete: () => void
   onDialogue?: () => void
   onVote?: () => void
+  onPromote?: () => void
 }
 
-export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote }: Props) {
+export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote, onPromote }: Props) {
   const { t } = useTranslation()
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
   const daysOld = ageDaysOld(item.updatedAt)
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_COLORS[item.category]}`}>
@@ -44,19 +45,19 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
             />
           )}
         </div>
-        <button onClick={onDelete} className="text-gray-300 hover:text-red-400 transition-colors text-xs">
+        <button onClick={onDelete} className="text-gray-300 hover:text-red-400 dark:text-gray-600 dark:hover:text-red-400 transition-colors text-xs">
           ✕
         </button>
       </div>
-      <h3 className="font-semibold text-gray-900 text-sm mb-1">{item.title}</h3>
+      <h3 className="font-semibold text-gray-900 dark:text-gray-50 text-sm mb-1">{item.title}</h3>
       {item.description && (
-        <p className="text-xs text-gray-500 mb-2 leading-relaxed">{item.description}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 leading-relaxed">{item.description}</p>
       )}
-      <div className="text-xs text-gray-400 space-y-0.5 mb-2">
-        <div>{t('board.owner')}: <span className="text-gray-600">{item.owner || '—'}</span></div>
+      <div className="text-xs text-gray-400 dark:text-gray-500 space-y-0.5 mb-2">
+        <div>{t('board.owner')}: <span className="text-gray-600 dark:text-gray-300">{item.owner || '—'}</span></div>
         <div>
           {t('board.copilot')}:{' '}
-          <span className="text-gray-600">{item.copilot || t('board.no_copilot')}</span>
+          <span className="text-gray-600 dark:text-gray-300">{item.copilot || t('board.no_copilot')}</span>
         </div>
       </div>
       {dueDateState !== 'none' && item.dueDate && (
@@ -70,8 +71,23 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
           </span>
         </div>
       )}
+      {item.changeplannerUrl && (
+        <div className="mb-2">
+          <a
+            href={item.changeplannerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+          >
+            <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              <path d="M7 2h3v3M10 2L6 6M5 3H2v7h7V7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {t('board.promoted_cp')}
+          </a>
+        </div>
+      )}
       <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {onMoveForward && (
             <button onClick={onMoveForward} className="btn-primary text-xs py-1 px-3">
               {item.status === 'identified' ? t('board.move_to_progress') : t('board.move_to_done')}
@@ -82,18 +98,30 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
               {t('board.start_dialogue')}
             </button>
           )}
+          {onPromote && (
+            <button
+              onClick={onPromote}
+              title={t('board.promote_to_cp_title')}
+              className="btn-secondary text-xs py-1 px-3 flex items-center gap-1"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M6 9V3M3 6l3-3 3 3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              {t('board.promote_to_cp')}
+            </button>
+          )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {(item.comments?.length ?? 0) > 0 && (
-            <span className="text-xs text-gray-400">💬 {item.comments!.length}</span>
+            <span className="text-xs text-gray-400 dark:text-gray-500">💬 {item.comments!.length}</span>
           )}
           <button
             onClick={onVote}
             title={t('board.vote')}
-            className="flex items-center gap-1 text-xs text-gray-400 hover:text-brand-600 transition-colors"
+            className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
           >
             <span>▲</span>
-            <span className={item.votes ? 'text-brand-600 font-semibold' : ''}>{item.votes ?? 0}</span>
+            <span className={item.votes ? 'text-brand-600 dark:text-brand-400 font-semibold' : ''}>{item.votes ?? 0}</span>
           </button>
         </div>
       </div>

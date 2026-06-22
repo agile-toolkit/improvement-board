@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Screen, ImprovementItem, TeamMember, SprintArchive, ItemComment } from './types'
 import AppHeader from './components/AppHeader'
+import ThemeToggle from './components/ThemeToggle'
 import BoardView from './components/BoardView'
 import ImprovementBoard from './components/ImprovementBoard'
 import DialogueView from './components/DialogueView'
@@ -106,6 +107,14 @@ export default function App() {
     updateItems(items.map(i => ({ ...i, votes: 0 })))
   }
 
+  const handlePromote = (id: string) => {
+    const item = items.find(i => i.id === id)
+    if (!item) return
+    const cpUrl = `https://agile-toolkit.github.io/change-planner/?prefill=${encodeURIComponent(item.title)}&description=${encodeURIComponent(item.description)}&utm_source=improvement-board`
+    window.open(cpUrl, '_blank', 'noopener,noreferrer')
+    updateItems(items.map(i => i.id === id ? { ...i, changeplannerUrl: cpUrl } : i))
+  }
+
   const handleEndSprint = () => {
     const doneItems = items.filter(i => i.status === 'done')
     if (doneItems.length === 0) return
@@ -121,7 +130,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" data-accent="violet">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950" data-accent="violet">
       <AppHeader
         title={t('app.title')}
         onTitleClick={() => setScreen('board')}
@@ -133,7 +142,9 @@ export default function App() {
           { key: 'timer', label: t('nav.timer'), active: screen === 'timer', onClick: () => setScreen('timer') },
           { key: 'learn', label: t('nav.learn'), active: screen === 'learn', onClick: () => setScreen('learn') },
         ]}
-      />
+      >
+        <ThemeToggle />
+      </AppHeader>
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
         {screen === 'board' && (
@@ -148,6 +159,7 @@ export default function App() {
             }}
             onVote={handleVote}
             onResetVotes={handleResetVotes}
+            onPromote={handlePromote}
             prefillTitle={prefillTitle}
             fromSprintMetrics={fromSprintMetrics}
             currentSprint={sprintHistory.length + 1}
@@ -161,6 +173,7 @@ export default function App() {
             onItems={updateItems}
             onVote={handleVote}
             onResetVotes={handleResetVotes}
+            onPromote={handlePromote}
             currentSprint={sprintHistory.length + 1}
             onEndSprint={handleEndSprint}
           />

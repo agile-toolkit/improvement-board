@@ -64,16 +64,16 @@ export default function ProblemTimer() {
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-900">{t('timer.title')}</h2>
-      <p className="text-gray-500 text-sm">{t('timer.description')}</p>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-50">{t('timer.title')}</h2>
+      <p className="text-gray-500 dark:text-gray-400 text-sm">{t('timer.description')}</p>
 
-      <div className="bg-brand-50 border border-brand-200 rounded-xl p-4 text-sm text-brand-800">
+      <div className="bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800 rounded-xl p-4 text-sm text-brand-800 dark:text-brand-300">
         {t('timer.facilitation_intro')}
       </div>
 
       {!running && remaining === duration * 60 && !finished && (
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-semibold text-gray-700">{t('timer.duration_label')}</span>
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{t('timer.duration_label')}</span>
           <div className="flex gap-2">
             {PRESETS.map(d => (
               <button
@@ -83,7 +83,7 @@ export default function ProblemTimer() {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   duration === d
                     ? 'bg-brand-600 text-white'
-                    : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
                 {d}m
@@ -113,7 +113,7 @@ export default function ProblemTimer() {
           </svg>
           <div className="absolute inset-0 flex items-center justify-center flex-col">
             <span
-              className={`text-4xl font-bold tabular-nums ${finished ? 'text-green-600' : 'text-gray-900'}`}
+              className={`text-4xl font-bold tabular-nums ${finished ? 'text-green-600' : 'text-gray-900 dark:text-gray-50'}`}
             >
               {finished ? '✓' : `${mins}:${secs}`}
             </span>
@@ -141,10 +141,10 @@ export default function ProblemTimer() {
       </div>
 
       <div className="card">
-        <h3 className="font-semibold text-gray-900 mb-3">{t('timer.practice_title')}</h3>
+        <h3 className="font-semibold text-gray-900 dark:text-gray-50 mb-3">{t('timer.practice_title')}</h3>
         <ol className="space-y-2">
           {steps.map((s, i) => (
-            <li key={s} className="flex items-start gap-3 text-sm text-gray-600">
+            <li key={s} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
               <span className="shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-700 text-xs font-bold flex items-center justify-center">
                 {i + 1}
               </span>
