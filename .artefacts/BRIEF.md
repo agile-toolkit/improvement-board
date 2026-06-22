@@ -18,6 +18,7 @@ Team improvement tracking aligned with Management 3.0 Improvement Dialogues / Co
 - [x] Sprint cycle reset — "End Sprint" button in Board and Kanban views (visible only when done items exist); native confirm dialog; archives done items to `improvement-board:sprintHistory`; clears done column; sprint count badge ("Sprint N") in both view headers; i18n keys in EN/ES/BE/RU
 - [x] Team priority voting — ▲ upvote button on every card in Board and Kanban views; `votes?: number` field on `ImprovementItem`; "Most voted" sort mode in both views; "Reset votes" button (shown when any votes exist, requires confirm); i18n keys `board.vote`, `board.sort_votes`, `board.reset_votes`, `board.reset_votes_confirm` in EN/ES/BE/RU
 - [x] Unified header — `AppHeader` + `LanguagePicker` from design system replace inline header; nav pills remain in header via `navItems` prop; language dropdown replaces four-button pill group
+- [x] Promote to Change Planner — 🚀 button on every card (Board + Kanban) opens Change Planner with `?prefill=<title>&description=<desc>&utm_source=improvement-board` in new tab; `changeplannerUrl` stored on item; ↗ back-link badge when URL set; i18n keys `board.promote`, `board.promoted_badge` in EN/ES/BE/RU
 
 ## Backlog
 
@@ -33,7 +34,7 @@ Team improvement tracking aligned with Management 3.0 Improvement Dialogues / Co
 - [x] [#14] Feature: Sprint cycle reset — archive done items with sprint summary
 - [x] [#15] Feature: item comment thread in Dialogue view (async team notes with timestamps)
 - [ ] [#16] Feature: PWA offline mode for in-room facilitation
-- [ ] [#17] Integration: Promote improvement item to Change Planner
+- [x] [#17] Integration: Promote improvement item to Change Planner
 - [ ] [#18] Feature: bulk status actions (multi-select cards)
 - [x] [#19] Unify header: AppHeader component + LanguagePicker
 
@@ -51,6 +52,12 @@ Team improvement tracking aligned with Management 3.0 Improvement Dialogues / Co
 - Re-run literal-key audit after large copy changes; keep `ru.json` in sync with `en.json`.
 
 ## Agent Log
+
+### 2026-06-22 — feat: promote improvement item to Change Planner (#17)
+- Done: added `changeplannerUrl?: string` to `ImprovementItem` in `types.ts`; 🚀 promote button in `ImprovementCard.tsx` (Board view) opens Change Planner with `?prefill=<title>&description=<desc>&utm_source=improvement-board` in new tab and stores URL via `onPromote`; ↗ back-link anchor badge shown when `changeplannerUrl` set; same button + badge mirrored in Kanban `ItemCard` in `ImprovementBoard.tsx`; `handlePromote` added to `App.tsx`, wired to both `BoardView` and `ImprovementBoard`; `board.promote` + `board.promoted_badge` i18n keys added to EN/ES/BE/RU
+- Marked issue #17 as In Review
+- Remaining approved issues: #9, #16, #20
+- Next task: implement #20 (light/dark theme — ThemeToggle in AppHeader children slot, dark: Tailwind variants on all components)
 
 ### 2026-06-19 — feat: unified header AppHeader + LanguagePicker (#19)
 - Done: copied `AppHeader.tsx` and `LanguagePicker.tsx` from design system into `src/components/`; replaced inline `<header>` in `App.tsx` with `<AppHeader>` using `navItems` prop (all 6 screen tabs); removed four-button language pill group (LanguagePicker dropdown now embedded in AppHeader); removed `i18n` destructure from `useTranslation` in `App.tsx`; build passes
