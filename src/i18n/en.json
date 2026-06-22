@@ -72,7 +72,9 @@
     "vote": "Upvote this item",
     "sort_votes": "Most voted",
     "reset_votes": "Reset votes",
-    "reset_votes_confirm": "Reset all vote counts to zero?"
+    "reset_votes_confirm": "Reset all vote counts to zero?",
+    "promote": "Promote to Change Planner",
+    "promoted_badge": "Opened in Change Planner"
   },
   "add_form": {
     "title": "New Improvement Item",

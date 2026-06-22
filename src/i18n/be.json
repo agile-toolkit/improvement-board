@@ -72,7 +72,9 @@
     "vote": "Прагаласаваць за гэты элемент",
     "sort_votes": "Па галасах",
     "reset_votes": "Скінуць галасы",
-    "reset_votes_confirm": "Скінуць усе лічыльнікі галасоў да нуля?"
+    "reset_votes_confirm": "Скінуць усе лічыльнікі галасоў да нуля?",
+    "promote": "Перавесці ў Change Planner",
+    "promoted_badge": "Адкрыта ў Change Planner"
   },
   "add_form": {
     "title": "Новы Элемент Паляпшэння",

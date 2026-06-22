@@ -5,12 +5,15 @@ import type { ImprovementItem, TeamMember, Category, ImprovementStatus } from '.
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildKanbanUrl } from '../utils/kanbanLink'
 
+const CHANGE_PLANNER_BASE = 'https://agile-toolkit.github.io/change-planner/'
+
 interface Props {
   items: ImprovementItem[]
   members: TeamMember[]
   onItems: (items: ImprovementItem[]) => void
   onVote: (id: string) => void
   onResetVotes: () => void
+  onPromote: (id: string, url: string) => void
   currentSprint: number
   onEndSprint: () => void
 }
@@ -34,7 +37,7 @@ const CAT_BADGE: Record<Category, string> = {
 
 type SortMode = 'default' | 'due' | 'stale' | 'votes'
 
-export default function ImprovementBoard({ items, members, onItems, onVote, onResetVotes, currentSprint, onEndSprint }: Props) {
+export default function ImprovementBoard({ items, members, onItems, onVote, onResetVotes, onPromote, currentSprint, onEndSprint }: Props) {
   const { t } = useTranslation()
   const [adding, setAdding] = useState(false)
   const [sortMode, setSortMode] = useState<SortMode>('default')
@@ -325,6 +328,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
                   onDelete={deleteItem}
                   onOutcome={updateOutcome}
                   onVote={onVote}
+                  onPromote={onPromote}
                   t={t}
                 />
               ))}
@@ -348,6 +352,7 @@ function ItemCard({
   onDelete,
   onOutcome,
   onVote,
+  onPromote,
   t,
 }: {
   item: ImprovementItem
@@ -358,6 +363,7 @@ function ItemCard({
   onDelete: (id: string) => void
   onOutcome: (id: string, o: string) => void
   onVote: (id: string) => void
+  onPromote: (id: string, url: string) => void
   t: (k: string, opts?: Record<string, unknown>) => string
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -365,6 +371,18 @@ function ItemCard({
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
   const daysOld = ageDaysOld(item.updatedAt)
+
+  function handlePromote() {
+    const url =
+      CHANGE_PLANNER_BASE +
+      '?prefill=' +
+      encodeURIComponent(item.title) +
+      '&description=' +
+      encodeURIComponent(item.description ?? '') +
+      '&utm_source=improvement-board'
+    window.open(url, '_blank', 'noopener,noreferrer')
+    onPromote(item.id, url)
+  }
 
   return (
     <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-3">
@@ -417,6 +435,25 @@ function ItemCard({
         {(item.comments?.length ?? 0) > 0 && (
           <span className="text-xs text-slate-400">💬 {item.comments!.length}</span>
         )}
+        {item.changeplannerUrl && (
+          <a
+            href={item.changeplannerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={t('board.promoted_badge')}
+            className="text-xs text-indigo-500 hover:text-indigo-700 transition-colors"
+          >
+            ↗
+          </a>
+        )}
+        <button
+          type="button"
+          onClick={handlePromote}
+          title={t('board.promote')}
+          className="text-xs text-slate-400 hover:text-indigo-600 transition-colors"
+        >
+          🚀
+        </button>
         <button
           type="button"
           onClick={() => onVote(item.id)}

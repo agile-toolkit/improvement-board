@@ -19,13 +19,14 @@ interface Props {
   onDialogue: (item: ImprovementItem) => void
   onVote: (id: string) => void
   onResetVotes: () => void
+  onPromote: (id: string, url: string) => void
   prefillTitle?: string
   fromSprintMetrics?: boolean
   currentSprint: number
   onEndSprint: () => void
 }
 
-export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue, onVote, onResetVotes, prefillTitle, fromSprintMetrics, currentSprint, onEndSprint }: Props) {
+export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue, onVote, onResetVotes, onPromote, prefillTitle, fromSprintMetrics, currentSprint, onEndSprint }: Props) {
   const { t } = useTranslation()
   const [showAdd, setShowAdd] = useState(false)
   const [sortMode, setSortMode] = useState<SortMode>('default')
@@ -221,6 +222,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
                   }
                   onDialogue={item.status === 'in_progress' ? () => onDialogue(item) : undefined}
                   onVote={() => onVote(item.id)}
+                  onPromote={(url) => onPromote(item.id, url)}
                 />
               ))}
             </div>

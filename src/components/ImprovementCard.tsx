@@ -10,19 +10,34 @@ const CATEGORY_COLORS: Record<string, string> = {
   other: 'bg-gray-100 text-gray-600',
 }
 
+const CHANGE_PLANNER_BASE = 'https://agile-toolkit.github.io/change-planner/'
+
 interface Props {
   item: ImprovementItem
   onMoveForward?: () => void
   onDelete: () => void
   onDialogue?: () => void
   onVote?: () => void
+  onPromote?: (url: string) => void
 }
 
-export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote }: Props) {
+export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote, onPromote }: Props) {
   const { t } = useTranslation()
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
   const daysOld = ageDaysOld(item.updatedAt)
+
+  function handlePromote() {
+    const url =
+      CHANGE_PLANNER_BASE +
+      '?prefill=' +
+      encodeURIComponent(item.title) +
+      '&description=' +
+      encodeURIComponent(item.description ?? '') +
+      '&utm_source=improvement-board'
+    window.open(url, '_blank', 'noopener,noreferrer')
+    onPromote?.(url)
+  }
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
@@ -84,6 +99,24 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
           )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
+          {item.changeplannerUrl && (
+            <a
+              href={item.changeplannerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={t('board.promoted_badge')}
+              className="text-xs text-indigo-500 hover:text-indigo-700 transition-colors"
+            >
+              ↗
+            </a>
+          )}
+          <button
+            onClick={handlePromote}
+            title={t('board.promote')}
+            className="text-xs text-gray-400 hover:text-indigo-600 transition-colors"
+          >
+            🚀
+          </button>
           {(item.comments?.length ?? 0) > 0 && (
             <span className="text-xs text-gray-400">💬 {item.comments!.length}</span>
           )}

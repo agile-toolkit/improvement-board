@@ -106,6 +106,10 @@ export default function App() {
     updateItems(items.map(i => ({ ...i, votes: 0 })))
   }
 
+  const handlePromote = (id: string, url: string) => {
+    updateItems(items.map(i => i.id === id ? { ...i, changeplannerUrl: url } : i))
+  }
+
   const handleEndSprint = () => {
     const doneItems = items.filter(i => i.status === 'done')
     if (doneItems.length === 0) return
@@ -148,6 +152,7 @@ export default function App() {
             }}
             onVote={handleVote}
             onResetVotes={handleResetVotes}
+            onPromote={handlePromote}
             prefillTitle={prefillTitle}
             fromSprintMetrics={fromSprintMetrics}
             currentSprint={sprintHistory.length + 1}
@@ -161,6 +166,7 @@ export default function App() {
             onItems={updateItems}
             onVote={handleVote}
             onResetVotes={handleResetVotes}
+            onPromote={handlePromote}
             currentSprint={sprintHistory.length + 1}
             onEndSprint={handleEndSprint}
           />
