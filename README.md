@@ -1,8 +1,8 @@
 # Improvement Board
 
-A team improvement tracking tool based on Management 3.0's Improvement Dialogues and Copilot Programs — capture problems, run structured dialogues, assign peer coaches, and track progress. Items move through Identified → In Progress → Done in both a Board (list) and a Kanban view, with due dates, aging indicators, voting, and an async comment thread per item. All state lives in the browser (no backend); the app deep-links into the wider agile-toolkit suite (Sprint Metrics, Moving Motivators, Kanban Designer, Change Planner, Planning Poker).
+A team improvement tracking tool built around Improvement Dialogues and Copilot Programs — capture problems, run structured dialogues, assign peer coaches, and track progress. Items move through Identified → In Progress → Done in both a Board (list) and a Kanban view, with due dates, aging indicators, voting, and an async comment thread per item. All state lives in the browser (no backend); the app deep-links into the wider agile-toolkit suite (Sprint Metrics, Moving Motivators, Kanban Designer, Change Planner, Planning Poker).
 
-Part of the [Agile Tools](https://github.com/bthos) suite built on Management 3.0 and ICAgile source materials.
+Part of the [Agile Tools](https://github.com/bthos) suite built on ICAgile source materials.
 
 See `GOAL.md` for why this app exists and `ROADMAP.md` for what's shipped and queued next.
 

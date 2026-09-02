@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.2.2 — Remove Management 3.0 references (2026-09-02)
+
+- **content**: removed "Management 3.0" text from the Problem Time
+  description, `index.html`'s meta description, and `README.md` —
+  reworded to reference the Improvement Dialogues/Copilot Programs/
+  Problem Time practices directly rather than the framework brand. All
+  4 locales updated.
+
 ## 0.2.1 — Fix invisible brand-color borders/backgrounds + utils test coverage (2026-09-02)
 
 - **fix**: `brand-200`/`brand-300`/`brand-800`/`brand-900` were referenced

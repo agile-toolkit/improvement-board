@@ -155,7 +155,7 @@
   "timer": {
     "title": "Problem Time",
     "facilitation_intro": "Use the ring timer to keep Problem Time focused. Follow the steps below so the team explores the problem before jumping to solutions.",
-    "description": "Problem Time is a timeboxed team practice from Management 3.0. The team allocates a fixed slot (e.g. 10–15 min) during a meeting to discuss one problem using a structured format.",
+    "description": "Problem Time is a timeboxed team practice. The team allocates a fixed slot (e.g. 10–15 min) during a meeting to discuss one problem using a structured format.",
     "duration_label": "Duration (minutes)",
     "start": "Start Timer",
     "pause": "Pause",

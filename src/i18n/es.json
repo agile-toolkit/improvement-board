@@ -155,7 +155,7 @@
   "timer": {
     "title": "Tiempo Problema",
     "facilitation_intro": "Usa el temporizador para mantener el Tiempo Problema enfocado. Sigue los pasos para que el equipo explore el problema antes de saltar a soluciones.",
-    "description": "El Tiempo Problema es una práctica de equipo con tiempo limitado de Management 3.0. El equipo dedica un espacio fijo (p. ej. 10–15 min) en una reunión para discutir un problema con formato estructurado.",
+    "description": "El Tiempo Problema es una práctica de equipo con tiempo limitado. El equipo dedica un espacio fijo (p. ej. 10–15 min) en una reunión para discutir un problema con formato estructurado.",
     "duration_label": "Duración (minutos)",
     "start": "Iniciar Temporizador",
     "pause": "Pausar",
