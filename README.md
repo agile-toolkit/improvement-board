@@ -15,6 +15,7 @@ npm install       # install dependencies
 npm run dev       # start Vite dev server
 npm run build     # tsc typecheck + production build
 npm run preview   # preview the production build locally
+npm test          # vitest run — src/utils/*.ts
 ```
 
 ## Deploy
@@ -38,6 +39,8 @@ GitHub Pages via GitHub Actions on push to `main`.
 - **Cross-app integrations (read/deep-link, not owned by this app):** `src/utils/movingMotivatorsImport.ts` reads `moving-motivators:lastSession` to suggest the bottom-ranked motivators as one-click item pre-fills; `src/utils/kanbanLink.ts` and `src/utils/changePlannerLink.ts` build outbound deep-link URLs (`?prefill=...&utm_source=improvement-board`) to Kanban Designer and Change Planner; the app also accepts inbound `?prefill=<title>&utm_source=...` from Sprint Metrics and Moving Motivators to auto-open the Add Item modal.
 - **Board export:** "Export PNG" uses `html2canvas` to capture the columns grid, clipboard-first with a file-download fallback.
 - **Inline title editing:** double-click a card's title (Board view's `ImprovementCard.tsx`, Kanban view's `ItemCard` in `ImprovementBoard.tsx`) to rename in place — Enter/blur commits, Escape reverts. Double-click was chosen over single-click specifically because the Kanban card's title is already a single-click expand/collapse toggle; reusing the same element for two single-click behaviors would have been ambiguous.
+- **`brand` color scale** (`tailwind.config.js`) — Tailwind's stock `green` palette. Only keep shades that are actually referenced in `className`s (currently 50/100/200/300/400/500/600/700/800/900) — an unreferenced shade silently renders as no class at all (invisible border/background/text, not an error), which is what happened to `brand-200`/`300`/`800`/`900` before a suite-wide audit caught it.
+- **Test coverage:** `src/utils/*.test.ts` covers all four utility modules — `dueDate.ts`'s state machine (overdue/today/soon/future/done, aging thresholds), `kanbanLink.ts`/`changePlannerLink.ts`'s deep-link URL builders, and `movingMotivatorsImport.ts`'s session parsing and bottom-motivator selection.
 
 ## Source materials
 See `.artefacts/BRIEF.md` for the full agent-maintained feature checklist and run-by-run narrative log (issue research, implementation decisions).

@@ -11,6 +11,8 @@ None — idle. See `## Next epics` below.
 3. **E3 remainder: custom tags** — serves signal #1, #2. [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls) — `needs-review`, past the 7-day staleness threshold.
 
 ## Recently shipped
+**Fix: invisible brand-color borders/backgrounds + utils test coverage** (2026-09-02) — see `## Shipped`. A suite-wide audit found `brand-200`/`300`/`800`/`900` referenced in 4 files (`ProblemTimer.tsx`, `TeamView.tsx`, `AppHeader.tsx`, `DialogueView.tsx`) but undefined in `tailwind.config.js` — invisible borders/backgrounds/text in both light and dark mode. Completed the `brand` scale with Tailwind's own `green` values (the palette the existing 6 shades were already drawn from). Also added this repo's first automated test coverage.
+
 **E3 (partial): inline quick-edit of card title** (2026-09-02) — see `## Shipped`. [#42](https://github.com/agile-toolkit/improvement-board/issues/42) shipped; #39 (custom tags) remains queued above as the rest of E3.
 
 ## Repo cleanup (2026-09-02)
@@ -40,3 +42,9 @@ sessions' environments.
 **v0.2.0 — [E3 (partial): inline quick-edit of card title](https://github.com/agile-toolkit/improvement-board/issues/42)** (2026-09-02):
 - ~~Double-click a card's title in Board or Kanban view to rename in place
   — Enter/blur commits, Escape reverts~~
+
+**v0.2.1 — Fix invisible brand-color borders/backgrounds + utils test coverage** (2026-09-02):
+- ~~Completed the `brand` Tailwind color scale (200/300/800/900 were
+  missing, used in 4 files) — invisible borders/backgrounds/text in both
+  light and dark mode~~
+- ~~Added `vitest` + `jsdom`; tests for all four `src/utils/*.ts` modules~~

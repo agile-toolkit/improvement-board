@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 0.2.1 — Fix invisible brand-color borders/backgrounds + utils test coverage (2026-09-02)
+
+- **fix**: `brand-200`/`brand-300`/`brand-800`/`brand-900` were referenced
+  in 4 components (`ProblemTimer.tsx`, `TeamView.tsx`, `AppHeader.tsx`,
+  `DialogueView.tsx`) but never defined in `tailwind.config.js` — Tailwind
+  silently emits no class for an undefined shade, so these rendered as
+  invisible borders/backgrounds/text in both light and dark mode. Found
+  during a suite-wide UX audit (the same class of bug as Kanban Designer's
+  `brand-200` gap). Completed the `brand` scale with Tailwind's own
+  `green` values — the 6 existing shades were already drawn from that
+  palette verbatim.
+- **test**: added `vitest` + `jsdom` (this repo's first automated test
+  coverage). 26 tests across all four `src/utils/*.ts` modules —
+  `dueDate.ts`'s overdue/today/soon/future/done + aging state machines,
+  `kanbanLink.ts`/`changePlannerLink.ts`'s deep-link URL builders, and
+  `movingMotivatorsImport.ts`'s session parsing and bottom-motivator
+  selection. `npm test` now passes cleanly.
+
 ## 0.2.0 — E3 (partial): inline quick-edit of card title (2026-09-02)
 
 - **feat**: double-click a card's title in either Board or Kanban view to
