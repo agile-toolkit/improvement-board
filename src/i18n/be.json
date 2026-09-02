@@ -88,7 +88,9 @@
     "mark_in_progress": "Пазначыць У Працэсе",
     "mark_done": "Пазначыць Гатова",
     "delete_selected": "Выдаліць абраныя",
-    "delete_selected_confirm": "Выдаліць {{count}} абраны(х) элемент(аў)?"
+    "delete_selected_confirm": "Выдаліць {{count}} абраны(х) элемент(аў)?",
+    "edit_title": "Рэдагаваць загаловак",
+    "edit_title_hint": "Двайны клік для рэдагавання"
   },
   "add_form": {
     "title": "Новы Элемент Паляпшэння",

@@ -6,9 +6,18 @@ Derived from GOAL.md. Rebuilt when GOAL changes or an epic ships.
 None — idle. See `## Next epics` below.
 
 ## Next epics
-1. **E1: Cross-app estimation & retro-import integrations** — serves #5. Two `needs-review` integration issues, both past the 7-day staleness threshold (as of 2026-07-25): [#40](https://github.com/agile-toolkit/improvement-board/issues/40) (Planning Poker deep-link for effort estimation, reading `pp-session-history`) and [#38](https://github.com/agile-toolkit/improvement-board/issues/38) (Scrum Facilitator retro action-item import, mirroring the existing Moving Motivators import pattern). Both follow the established deep-link + localStorage-read convention already used for Sprint Metrics and Moving Motivators.
-2. **E2: Reporting & analytics** — serves #2, #5. Two `needs-review` issues past the 7-day staleness threshold: [#41](https://github.com/agile-toolkit/improvement-board/issues/41) (CSV/text export of all items for management reporting) and [#37](https://github.com/agile-toolkit/improvement-board/issues/37) (sprint history analytics tab visualising the existing `improvement-board:sprintHistory` archive). Both give facilitators and management a structured view beyond the live board.
-3. **E3: In-session card UX** — serves #1, #2. Two `needs-review` issues past the 7-day staleness threshold: [#42](https://github.com/agile-toolkit/improvement-board/issues/42) (inline quick-edit of card title, removing the need to open the full modal for a small correction) and [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls).
+1. **E1: Cross-app estimation & retro-import integrations** — serves signal #1 (loop closes faster when items arrive pre-populated instead of re-typed). Two `needs-review` integration issues, both past the 7-day staleness threshold: [#40](https://github.com/agile-toolkit/improvement-board/issues/40) (Planning Poker deep-link for effort estimation, reading `pp-session-history`) and [#38](https://github.com/agile-toolkit/improvement-board/issues/38) (Scrum Facilitator retro action-item import, mirroring the existing Moving Motivators import pattern). Both follow the established deep-link + localStorage-read convention already used for Sprint Metrics and Moving Motivators.
+2. **E2: Reporting & analytics** — serves signal #2, #3. Two `needs-review` issues past the 7-day staleness threshold: [#41](https://github.com/agile-toolkit/improvement-board/issues/41) (CSV/text export of all items for management reporting) and [#37](https://github.com/agile-toolkit/improvement-board/issues/37) (sprint history analytics tab visualising the existing `improvement-board:sprintHistory` archive). Both give facilitators and management a structured view beyond the live board.
+3. **E3 remainder: custom tags** — serves signal #1, #2. [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls) — `needs-review`, past the 7-day staleness threshold.
+
+## Recently shipped
+**E3 (partial): inline quick-edit of card title** (2026-09-02) — see `## Shipped`. [#42](https://github.com/agile-toolkit/improvement-board/issues/42) shipped; #39 (custom tags) remains queued above as the rest of E3.
+
+## Repo cleanup (2026-09-02)
+Closed 10 stale `approved` issues (#3, #7–#12, #15, #17, #19) that were
+already implemented per this file's own long-standing note — confirmed,
+just awaiting a human close since Project status couldn't be set from prior
+sessions' environments.
 
 ## Polish backlog
 - No polish-only items without a filed issue at this time — everything currently queued is tracked above or already shipped.
@@ -28,4 +37,6 @@ None — idle. See `## Next epics` below.
 - ~~Cross-app deep-link integrations: Sprint Metrics → Improvement Board (prefill), Moving Motivators → Improvement Board (bottom-motivator import), Improvement Board → Kanban Designer (item export), Improvement Board → Change Planner (promote item)~~
 - ~~`improvement-board:lastSession` summary key for the suite Dashboard hub card~~
 
-Note: issues #3, #7, #8, #9, #10, #11, #12, #15, #17, #19 remain open on GitHub with an `approved` label — per the Agent Log in `.artefacts/BRIEF.md` these are all fully implemented in source (confirmed by repeated cross-checks) and only awaiting a human "Done" close on the issue/Project board (Projects v2 status could not be set from this environment). They are treated as shipped above, not as next epics.
+**v0.2.0 — [E3 (partial): inline quick-edit of card title](https://github.com/agile-toolkit/improvement-board/issues/42)** (2026-09-02):
+- ~~Double-click a card's title in Board or Kanban view to rename in place
+  — Enter/blur commits, Escape reverts~~

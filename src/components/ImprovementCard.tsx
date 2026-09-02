@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImprovementItem } from '../types'
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
@@ -17,16 +18,31 @@ interface Props {
   onDelete: () => void
   onDialogue?: () => void
   onVote?: () => void
+  onRename?: (title: string) => void
   selectMode?: boolean
   selected?: boolean
   onToggleSelect?: () => void
 }
 
-export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote, selectMode, selected, onToggleSelect }: Props) {
+export default function ImprovementCard({ item, onMoveForward, onDelete, onDialogue, onVote, onRename, selectMode, selected, onToggleSelect }: Props) {
   const { t } = useTranslation()
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
   const daysOld = ageDaysOld(item.updatedAt)
+  const [editing, setEditing] = useState(false)
+  const [draftTitle, setDraftTitle] = useState(item.title)
+
+  const startEditing = () => {
+    if (!onRename) return
+    setDraftTitle(item.title)
+    setEditing(true)
+  }
+
+  const commitEdit = () => {
+    const trimmed = draftTitle.trim()
+    if (trimmed && trimmed !== item.title) onRename?.(trimmed)
+    setEditing(false)
+  }
 
   return (
     <div className={`bg-white dark:bg-gray-900 rounded-xl border p-4 shadow-sm ${selected ? 'border-brand-500 ring-1 ring-brand-500' : 'border-gray-200 dark:border-gray-700'}`}>
@@ -61,7 +77,29 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
           ✕
         </button>
       </div>
-      <h3 className="font-semibold text-gray-900 dark:text-gray-50 text-sm mb-1">{item.title}</h3>
+      {editing ? (
+        <input
+          autoFocus
+          value={draftTitle}
+          onChange={e => setDraftTitle(e.target.value)}
+          onFocus={e => e.currentTarget.select()}
+          onBlur={commitEdit}
+          onKeyDown={e => {
+            if (e.key === 'Enter') { e.preventDefault(); commitEdit() }
+            if (e.key === 'Escape') { setDraftTitle(item.title); setEditing(false) }
+          }}
+          aria-label={t('board.edit_title')}
+          className="font-semibold text-gray-900 dark:text-gray-50 text-sm mb-1 w-full bg-white dark:bg-gray-800 border border-brand-400 rounded px-1 -mx-1 focus:outline-none"
+        />
+      ) : (
+        <h3
+          onDoubleClick={startEditing}
+          className={`font-semibold text-gray-900 dark:text-gray-50 text-sm mb-1 ${onRename ? 'cursor-text hover:underline decoration-dotted' : ''}`}
+          title={onRename ? t('board.edit_title_hint') : undefined}
+        >
+          {item.title}
+        </h3>
+      )}
       {item.description && (
         <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 leading-relaxed">{item.description}</p>
       )}

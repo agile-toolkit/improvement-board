@@ -112,6 +112,14 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
     )
   }
 
+  function renameItem(id: string, title: string) {
+    onItems(
+      items.map(i =>
+        i.id === id ? { ...i, title, updatedAt: Date.now() } : i
+      )
+    )
+  }
+
   function colItems(status: ImprovementStatus) {
     const filtered = items.filter(i => i.status === status)
     if (sortMode === 'due') {
@@ -326,6 +334,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
                   onDelete={deleteItem}
                   onOutcome={updateOutcome}
                   onVote={onVote}
+                  onRename={renameItem}
                   t={t}
                 />
               ))}
@@ -349,6 +358,7 @@ function ItemCard({
   onDelete,
   onOutcome,
   onVote,
+  onRename,
   t,
 }: {
   item: ImprovementItem
@@ -359,24 +369,51 @@ function ItemCard({
   onDelete: (id: string) => void
   onOutcome: (id: string, o: string) => void
   onVote: (id: string) => void
+  onRename: (id: string, title: string) => void
   t: (k: string, opts?: Record<string, unknown>) => string
 }) {
   const [expanded, setExpanded] = useState(false)
+  const [editingTitle, setEditingTitle] = useState(false)
+  const [draftTitle, setDraftTitle] = useState(item.title)
   const copilot = members.find(m => m.name === item.copilot)
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
   const daysOld = ageDaysOld(item.updatedAt)
 
+  const commitTitle = () => {
+    const trimmed = draftTitle.trim()
+    if (trimmed && trimmed !== item.title) onRename(item.id, trimmed)
+    setEditingTitle(false)
+  }
+
   return (
     <div className="bg-white dark:bg-gray-900 rounded-lg border border-slate-200 dark:border-gray-700 shadow-sm p-3">
       <div className="flex items-start justify-between gap-2">
-        <button
-          type="button"
-          onClick={() => setExpanded(v => !v)}
-          className="text-sm font-medium text-slate-800 dark:text-gray-100 text-left flex-1 hover:text-brand-700 dark:hover:text-brand-400"
-        >
-          {item.title}
-        </button>
+        {editingTitle ? (
+          <input
+            autoFocus
+            value={draftTitle}
+            onChange={e => setDraftTitle(e.target.value)}
+            onFocus={e => e.currentTarget.select()}
+            onBlur={commitTitle}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { e.preventDefault(); commitTitle() }
+              if (e.key === 'Escape') { setDraftTitle(item.title); setEditingTitle(false) }
+            }}
+            aria-label={t('board.edit_title')}
+            className="text-sm font-medium text-slate-800 dark:text-gray-100 flex-1 bg-white dark:bg-gray-800 border border-brand-400 rounded px-1 -mx-1 focus:outline-none"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setExpanded(v => !v)}
+            onDoubleClick={() => { setDraftTitle(item.title); setEditingTitle(true) }}
+            title={t('board.edit_title_hint')}
+            className="text-sm font-medium text-slate-800 dark:text-gray-100 text-left flex-1 hover:text-brand-700 dark:hover:text-brand-400"
+          >
+            {item.title}
+          </button>
+        )}
         <button
           type="button"
           onClick={() => onDelete(item.id)}

@@ -37,6 +37,7 @@ GitHub Pages via GitHub Actions on push to `main`.
 - **PWA:** `vite-plugin-pwa` with `registerType: 'autoUpdate'` — precaches JS/CSS/HTML/icons for offline in-room facilitation; `UpdateToast.tsx` surfaces a reload prompt via `useRegisterSW` when a new version is cached.
 - **Cross-app integrations (read/deep-link, not owned by this app):** `src/utils/movingMotivatorsImport.ts` reads `moving-motivators:lastSession` to suggest the bottom-ranked motivators as one-click item pre-fills; `src/utils/kanbanLink.ts` and `src/utils/changePlannerLink.ts` build outbound deep-link URLs (`?prefill=...&utm_source=improvement-board`) to Kanban Designer and Change Planner; the app also accepts inbound `?prefill=<title>&utm_source=...` from Sprint Metrics and Moving Motivators to auto-open the Add Item modal.
 - **Board export:** "Export PNG" uses `html2canvas` to capture the columns grid, clipboard-first with a file-download fallback.
+- **Inline title editing:** double-click a card's title (Board view's `ImprovementCard.tsx`, Kanban view's `ItemCard` in `ImprovementBoard.tsx`) to rename in place — Enter/blur commits, Escape reverts. Double-click was chosen over single-click specifically because the Kanban card's title is already a single-click expand/collapse toggle; reusing the same element for two single-click behaviors would have been ambiguous.
 
 ## Source materials
 See `.artefacts/BRIEF.md` for the full agent-maintained feature checklist and run-by-run narrative log (issue research, implementation decisions).

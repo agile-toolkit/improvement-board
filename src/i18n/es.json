@@ -88,7 +88,9 @@
     "mark_in_progress": "Marcar En Progreso",
     "mark_done": "Marcar Hecho",
     "delete_selected": "Eliminar seleccionados",
-    "delete_selected_confirm": "¿Eliminar {{count}} elemento(s) seleccionado(s)?"
+    "delete_selected_confirm": "¿Eliminar {{count}} elemento(s) seleccionado(s)?",
+    "edit_title": "Editar título",
+    "edit_title_hint": "Doble clic para editar"
   },
   "add_form": {
     "title": "Nuevo Ítem de Mejora",

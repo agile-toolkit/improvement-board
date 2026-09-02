@@ -88,7 +88,9 @@
     "mark_in_progress": "Отметить В работе",
     "mark_done": "Отметить Выполнено",
     "delete_selected": "Удалить выбранные",
-    "delete_selected_confirm": "Удалить {{count}} выбранный(х) элемент(ов)?"
+    "delete_selected_confirm": "Удалить {{count}} выбранный(х) элемент(ов)?",
+    "edit_title": "Изменить заголовок",
+    "edit_title_hint": "Двойной клик для редактирования"
   },
   "add_form": {
     "title": "Новый элемент улучшения",

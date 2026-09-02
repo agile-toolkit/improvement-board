@@ -294,6 +294,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
                   }
                   onDialogue={item.status === 'in_progress' ? () => onDialogue(item) : undefined}
                   onVote={() => onVote(item.id)}
+                  onRename={title => onUpdate({ ...item, title, updatedAt: Date.now() })}
                   selectMode={selectMode}
                   selected={selectedIds.has(item.id)}
                   onToggleSelect={() => toggleSelectItem(item.id)}
