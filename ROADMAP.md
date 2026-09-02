@@ -11,6 +11,8 @@ None — idle. See `## Next epics` below.
 3. **E3 remainder: custom tags** — serves signal #1, #2. [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls) — `needs-review`, past the 7-day staleness threshold.
 
 ## Recently shipped
+**Confirm before delete; fix low-contrast delete icons** (2026-09-02) — see `## Shipped`. A suite-wide UX audit found single-item delete had no confirmation (unlike bulk delete, which already confirms) and that delete-icon buttons used near-invisible `text-gray-300`/`slate-300`. Fixed both.
+
 **Fix: invisible brand-color borders/backgrounds + utils test coverage** (2026-09-02) — see `## Shipped`. A suite-wide audit found `brand-200`/`300`/`800`/`900` referenced in 4 files (`ProblemTimer.tsx`, `TeamView.tsx`, `AppHeader.tsx`, `DialogueView.tsx`) but undefined in `tailwind.config.js` — invisible borders/backgrounds/text in both light and dark mode. Completed the `brand` scale with Tailwind's own `green` values (the palette the existing 6 shades were already drawn from). Also added this repo's first automated test coverage.
 
 **E3 (partial): inline quick-edit of card title** (2026-09-02) — see `## Shipped`. [#42](https://github.com/agile-toolkit/improvement-board/issues/42) shipped; #39 (custom tags) remains queued above as the rest of E3.
@@ -48,3 +50,9 @@ sessions' environments.
   missing, used in 4 files) — invisible borders/backgrounds/text in both
   light and dark mode~~
 - ~~Added `vitest` + `jsdom`; tests for all four `src/utils/*.ts` modules~~
+
+**v0.2.3 — Confirm before delete; fix low-contrast delete icons** (2026-09-02):
+- ~~Added a confirm dialog to single-item delete in both Board/list and
+  Kanban view, matching the existing bulk-delete confirm~~
+- ~~Bumped delete-icon colors from `gray-300`/`slate-300` to
+  `gray-400`/`slate-400`~~

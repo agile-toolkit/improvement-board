@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.2.3 — Confirm before delete; fix low-contrast delete icons (2026-09-02)
+
+- **fix**: single-item delete (both the Board/list view and the Kanban
+  card) had no confirmation, unlike bulk delete which already confirms
+  via `window.confirm`. Added the same confirm to both single-item
+  delete paths (`App.tsx`, `ImprovementBoard.tsx`'s `deleteItem`).
+- **fix**: delete "✕"/"×" buttons in `ImprovementCard.tsx` and
+  `ImprovementBoard.tsx` used `text-gray-300`/`slate-300`, below WCAG AA
+  contrast and nearly invisible until hover. Bumped to `gray-400`/
+  `slate-400`.
+- Found via a suite-wide UX/scope audit.
+
 ## 0.2.2 — Remove Management 3.0 references (2026-09-02)
 
 - **content**: removed "Management 3.0" text from the Problem Time

@@ -43,6 +43,7 @@
     "in_progress": "En Progreso",
     "done": "Hecho",
     "delete": "Eliminar",
+    "delete_confirm": "¿Eliminar este elemento? Esta acción no se puede deshacer.",
     "edit": "Editar",
     "move_to_progress": "Iniciar",
     "move_to_done": "Completar",

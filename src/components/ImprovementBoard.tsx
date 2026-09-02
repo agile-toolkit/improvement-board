@@ -101,6 +101,7 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
   }
 
   function deleteItem(id: string) {
+    if (!window.confirm(t('board.delete_confirm'))) return
     onItems(items.filter(i => i.id !== id))
   }
 
@@ -418,7 +419,7 @@ function ItemCard({
           type="button"
           onClick={() => onDelete(item.id)}
           aria-label={t('board.delete')}
-          className="text-slate-300 dark:text-gray-600 hover:text-red-400 text-base leading-none shrink-0"
+          className="text-slate-400 dark:text-gray-500 hover:text-red-400 text-base leading-none shrink-0"
         >
           ×
         </button>

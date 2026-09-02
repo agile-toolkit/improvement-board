@@ -43,6 +43,7 @@
     "in_progress": "In Progress",
     "done": "Done",
     "delete": "Delete",
+    "delete_confirm": "Delete this item? This can't be undone.",
     "edit": "Edit",
     "move_to_progress": "Start",
     "move_to_done": "Complete",

@@ -157,7 +157,10 @@ export default function App() {
             items={items}
             onAdd={item => updateItems([...items, item])}
             onUpdate={updated => updateItems(items.map(i => (i.id === updated.id ? updated : i)))}
-            onDelete={id => updateItems(items.filter(i => i.id !== id))}
+            onDelete={id => {
+              if (!window.confirm(t('board.delete_confirm'))) return
+              updateItems(items.filter(i => i.id !== id))
+            }}
             onDialogue={item => {
               setDialogueId(item.id)
               setScreen('dialogue')
