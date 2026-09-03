@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { ImprovementItem } from '../types'
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
+import { CloseIcon } from './icons'
 
 const CATEGORY_COLORS: Record<string, string> = {
   process: 'bg-blue-100 text-blue-700',
@@ -74,7 +75,7 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
           )}
         </div>
         <button onClick={onDelete} aria-label={t('board.delete')} className="text-gray-400 dark:text-gray-500 hover:text-red-400 transition-colors text-xs">
-          ✕
+          <CloseIcon className="w-3.5 h-3.5" />
         </button>
       </div>
       {editing ? (

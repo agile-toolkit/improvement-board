@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CheckIcon } from './icons'
 
 const PRESETS = [5, 10, 15, 20]
 
@@ -113,9 +114,9 @@ export default function ProblemTimer() {
           </svg>
           <div className="absolute inset-0 flex items-center justify-center flex-col">
             <span
-              className={`text-4xl font-bold tabular-nums ${finished ? 'text-green-500 dark:text-green-400' : 'text-gray-900 dark:text-gray-50'}`}
+              className={`text-4xl font-bold tabular-nums flex items-center justify-center ${finished ? 'text-green-500 dark:text-green-400' : 'text-gray-900 dark:text-gray-50'}`}
             >
-              {finished ? '✓' : `${mins}:${secs}`}
+              {finished ? <CheckIcon className="w-10 h-10" /> : `${mins}:${secs}`}
             </span>
             {finished && (
               <span className="text-sm text-green-600 dark:text-green-400 font-medium">{t('timer.done_msg')}</span>

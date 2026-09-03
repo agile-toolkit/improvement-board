@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.2.6 — Replace decorative ✕/✓ emoji with SVG icons (2026-09-03)
+
+- **feat**: replaced 3 decorative `✕`/`✓` text glyphs (card delete
+  button, Learn page's principles-list bullet, the problem timer's
+  finished-state indicator) with `CloseIcon`/`CheckIcon` from the new
+  shared `icons.tsx`. Part of a suite-wide emoji→SVG sweep the user
+  asked for.
+
 ## 0.2.5 — Facilitator Mode (2026-09-03)
 
 - **feat**: added Facilitator (projector) Mode — a presentation toggle for
