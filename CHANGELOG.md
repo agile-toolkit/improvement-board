@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.2.4 — Fix LanguagePicker dark mode (2026-09-02)
+
+- **fix**: `LanguagePicker.tsx` had zero `dark:` classes — the
+  design-system's canonical copy never got dark-mode classes, and this
+  app's copy inherited the gap. Synced with the now-fixed design-system
+  source.
+
 ## 0.2.3 — Confirm before delete; fix low-contrast delete icons (2026-09-02)
 
 - **fix**: single-item delete (both the Board/list view and the Kanban
