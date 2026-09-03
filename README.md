@@ -30,6 +30,7 @@ GitHub Pages via GitHub Actions on push to `main`.
 | `improvement-board:lastSession` | `{ identified, inProgress, done, total, memberCount, lastUpdated }` | Compact summary written on every item/member update; read by the suite Dashboard (`agile-toolkit.github.io`) to render a live preview card. |
 | `improvement-board:sprintHistory` | `SprintArchive[]` — `{ sprintNumber, archivedAt, items[] }[]` | Archive of items snapshotted by "End Sprint"; written by `handleEndSprint()` in `App.tsx`. |
 | `theme` | `'light' \| 'dark'` | User's theme preference, written by `ThemeToggle.tsx`. |
+| `improvement-board:facilitatorMode` (`sessionStorage`) | `'1' \| '0'` | Facilitator (projector) mode toggle — per-tab, not persisted across sessions. See `src/components/useFacilitatorMode.ts`. |
 
 ## Tech notes
 - **State management:** plain React state in `App.tsx` (no store library); all mutations flow through a small set of handlers (`updateItems`, `updateMembers`, `handleEndSprint`, `handleBulkStatus`/`handleBulkDelete`, `handleVote`) that also persist to localStorage, so the two are always kept in sync.

@@ -11,6 +11,8 @@ None — idle. See `## Next epics` below.
 3. **E3 remainder: custom tags** — serves signal #1, #2. [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls) — `needs-review`, past the 7-day staleness threshold.
 
 ## Recently shipped
+**Facilitator Mode** (2026-09-03) — see `## Shipped`. A user asked for the presentation/projector mode already built for Team Identity to be adopted suite-wide; this is repo 6 of an 11-repo rollout, adopting the pattern now shared in `design-system/`.
+
 **Fix LanguagePicker dark mode** (2026-09-02) — see `## Shipped`. The design-system's canonical `LanguagePicker.tsx` never got dark-mode classes; this app's copy inherited the gap. Synced with the now-fixed design-system source.
 
 **Confirm before delete; fix low-contrast delete icons** (2026-09-02) — see `## Shipped`. A suite-wide UX audit found single-item delete had no confirmation (unlike bulk delete, which already confirms) and that delete-icon buttons used near-invisible `text-gray-300`/`slate-300`. Fixed both.
@@ -29,6 +31,7 @@ sessions' environments.
 - No polish-only items without a filed issue at this time — everything currently queued is tracked above or already shipped.
 
 ## Shipped
+- ~~Facilitator Mode — bigger UI + hidden nav/language picker for in-room presentation, adopted from the shared design-system pattern~~
 - ~~Board (list) and Kanban views with categories, due dates, aging indicators, and multi-mode sort (default/due/votes/stale)~~
 - ~~EN/RU/ES/BE localization across all wired UI strings~~
 - ~~Team priority voting (upvote, sort-by-votes, reset) on improvement items~~

@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import type { Screen, ImprovementItem, TeamMember, SprintArchive, ItemComment } from './types'
 import AppHeader from './components/AppHeader'
 import ThemeToggle from './components/ThemeToggle'
+import FacilitatorToggle from './components/FacilitatorToggle'
+import { useFacilitatorMode } from './components/useFacilitatorMode'
 import BoardView from './components/BoardView'
 import ImprovementBoard from './components/ImprovementBoard'
 import DialogueView from './components/DialogueView'
@@ -78,6 +80,7 @@ function saveSession(items: ImprovementItem[], members: TeamMember[]) {
 
 export default function App() {
   const { t } = useTranslation()
+  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('improvement-board:facilitatorMode')
   const [screen, setScreen] = useState<Screen>('board')
   const [items, setItems] = useState<ImprovementItem[]>(loadItems)
   const [members, setMembers] = useState<TeamMember[]>(loadMembers)
@@ -138,8 +141,8 @@ export default function App() {
       <AppHeader
         title={t('app.title')}
         onTitleClick={() => setScreen('board')}
-
-        navItems={[
+        hideLanguagePicker={facilitatorMode}
+        navItems={facilitatorMode ? [] : [
           { key: 'board', label: t('nav.board'), active: screen === 'board', onClick: () => setScreen('board') },
           { key: 'kanban', label: t('nav.kanban'), active: screen === 'kanban', onClick: () => setScreen('kanban') },
           { key: 'team', label: t('nav.team'), active: screen === 'team', onClick: () => setScreen('team') },
@@ -149,6 +152,12 @@ export default function App() {
         ]}
       >
         <ThemeToggle />
+        <FacilitatorToggle
+          active={facilitatorMode}
+          onToggle={toggleFacilitatorMode}
+          labelOn={t('facilitator.toggle_on')}
+          labelOff={t('facilitator.toggle_off')}
+        />
       </AppHeader>
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">

@@ -184,5 +184,9 @@
     "p2": "Los copilotos hacen preguntas, no dan consejos.",
     "p3": "El progreso es más importante que la perfección.",
     "p4": "Los ítems cerrados deben celebrarse y aprenderse de ellos."
+  },
+  "facilitator": {
+    "toggle_on": "Modo Facilitador",
+    "toggle_off": "Salir del Modo Facilitador"
   }
 }
