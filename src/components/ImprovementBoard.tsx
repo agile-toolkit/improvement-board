@@ -5,6 +5,7 @@ import type { ImprovementItem, TeamMember, Category, ImprovementStatus } from '.
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildKanbanUrl } from '../utils/kanbanLink'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
+import { CloseIcon } from './icons'
 
 interface Props {
   items: ImprovementItem[]
@@ -419,9 +420,9 @@ function ItemCard({
           type="button"
           onClick={() => onDelete(item.id)}
           aria-label={t('board.delete')}
-          className="text-slate-400 dark:text-gray-500 hover:text-red-400 text-base leading-none shrink-0"
+          className="text-slate-400 dark:text-gray-500 hover:text-red-400 leading-none shrink-0"
         >
-          ×
+          <CloseIcon className="w-3.5 h-3.5" />
         </button>
       </div>
       <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
