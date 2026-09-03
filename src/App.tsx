@@ -80,7 +80,7 @@ function saveSession(items: ImprovementItem[], members: TeamMember[]) {
 
 export default function App() {
   const { t } = useTranslation()
-  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('improvement-board:facilitatorMode')
+  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('agile-toolkit:facilitatorMode')
   const [screen, setScreen] = useState<Screen>('board')
   const [items, setItems] = useState<ImprovementItem[]>(loadItems)
   const [members, setMembers] = useState<TeamMember[]>(loadMembers)
