@@ -1,6 +1,21 @@
 # Changelog
 
 ## Unreleased
+- **chore**: Synced the shared `icons.tsx` (now 64 icons) and replaced the
+  remaining decorative emoji it now covers: `LearnView`'s three topic icons
+  (💬🤝⏱ → `ChatIcon`/`TeamIcon`/`StopwatchIcon`, the field is now a component
+  reference instead of a string), the comment-count 💬 and change-planner ↗
+  link on both `ImprovementCard` and `ImprovementBoard` (→ `ChatIcon`/
+  `LinkIcon`), `TeamView`'s 👤 assignee tag (→ `PersonIcon`), `BoardView`'s
+  📊/🎯 cross-app banners, ☑ select-items toggle, 📋 empty-state hero and 📊
+  sprint-metrics footer link (→ `ChartIcon`/`TargetIcon`/`CheckboxCheckedIcon`/
+  `ClipboardIcon`), `DialogueView`'s 💬 comment count (→ `ChatIcon`), and
+  `AddItemModal`'s 🔄 import-toggle label (→ `RefreshIcon`), and
+  `ImprovementBoard`'s move-forward buttons, which used a bare typographic
+  `→` rather than an emoji (→ `ArrowRightIcon`). Moving Motivators'
+  `MOTIVATOR_EMOJI` map in `movingMotivatorsImport.ts` stays real emoji — it
+  mirrors that app's own motivator cards, not UI chrome — and the `→`/`←`
+  that show up in `tokens.css` comments and in-sentence copy stay text too.
 - **ci**: CI Node bumped 20 → 22 and `engines` declared. `jsdom@30` requires
   Node `^22.22.2 || ^24.15.0 || >=26`, so the test step could never have passed
   on the pinned Node 20 — invisible until this release started running the

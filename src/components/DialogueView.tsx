@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImprovementItem, TeamMember } from '../types'
+import { ChatIcon } from './icons'
 
 const QUESTIONS = ['step1', 'step2', 'step3', 'step4', 'step5'] as const
 
@@ -78,8 +79,8 @@ export default function DialogueView({ items, members, selectedId, onSelect, onA
                   <div className="flex items-center justify-between gap-2">
                     <div className="font-medium text-sm text-gray-900 dark:text-gray-100">{item.title}</div>
                     {(item.comments?.length ?? 0) > 0 && (
-                      <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0">
-                        💬 {item.comments!.length}
+                      <span className="inline-flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 shrink-0">
+                        <ChatIcon className="w-3.5 h-3.5" /> {item.comments!.length}
                       </span>
                     )}
                   </div>

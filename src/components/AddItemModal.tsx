@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImprovementItem, Category } from '../types'
 import { readMovingMotivatorsSession, bottomMotivators, MOTIVATOR_EMOJI } from '../utils/movingMotivatorsImport'
+import { RefreshIcon } from './icons'
 
 const CATEGORIES: Category[] = ['process', 'technical', 'people', 'product', 'other']
 
@@ -171,7 +172,7 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
                   aria-expanded={showMmImport}
                   className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
                 >
-                  <span>🔄 {t('add_form.import_mm.toggle')}</span>
+                  <span className="inline-flex items-center gap-1"><RefreshIcon className="w-3.5 h-3.5" /> {t('add_form.import_mm.toggle')}</span>
                   <span>{showMmImport ? '−' : '+'}</span>
                 </button>
                 {showMmImport && (
