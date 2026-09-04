@@ -5,7 +5,7 @@ import type { ImprovementItem, TeamMember, Category, ImprovementStatus } from '.
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildKanbanUrl } from '../utils/kanbanLink'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
-import { CloseIcon, PersonIcon, ChatIcon, LinkIcon } from './icons'
+import { CloseIcon, PersonIcon, ChatIcon, LinkIcon, ArrowRightIcon } from './icons'
 
 interface Props {
   items: ImprovementItem[]
@@ -501,9 +501,9 @@ function ItemCard({
                   key={s}
                   type="button"
                   onClick={() => onMove(item.id, s)}
-                  className="text-xs border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 px-2 py-0.5 rounded transition-colors"
+                  className="text-xs border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 px-2 py-0.5 rounded transition-colors inline-flex items-center gap-1"
                 >
-                  → {t(`board.${s}`)}
+                  <ArrowRightIcon className="w-3 h-3" /> {t(`board.${s}`)}
                 </button>
               ))}
           </div>

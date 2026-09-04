@@ -10,9 +10,12 @@
   📊/🎯 cross-app banners, ☑ select-items toggle, 📋 empty-state hero and 📊
   sprint-metrics footer link (→ `ChartIcon`/`TargetIcon`/`CheckboxCheckedIcon`/
   `ClipboardIcon`), `DialogueView`'s 💬 comment count (→ `ChatIcon`), and
-  `AddItemModal`'s 🔄 import-toggle label (→ `RefreshIcon`). Moving
-  Motivators' `MOTIVATOR_EMOJI` map in `movingMotivatorsImport.ts` stays real
-  emoji — it mirrors that app's own motivator cards, not UI chrome.
+  `AddItemModal`'s 🔄 import-toggle label (→ `RefreshIcon`), and
+  `ImprovementBoard`'s move-forward buttons, which used a bare typographic
+  `→` rather than an emoji (→ `ArrowRightIcon`). Moving Motivators'
+  `MOTIVATOR_EMOJI` map in `movingMotivatorsImport.ts` stays real emoji — it
+  mirrors that app's own motivator cards, not UI chrome — and the `→`/`←`
+  that show up in `tokens.css` comments and in-sentence copy stay text too.
 - **ci**: CI Node bumped 20 → 22 and `engines` declared. `jsdom@30` requires
   Node `^22.22.2 || ^24.15.0 || >=26`, so the test step could never have passed
   on the pinned Node 20 — invisible until this release started running the
