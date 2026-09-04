@@ -5,6 +5,7 @@ import type { ImprovementItem, ImprovementStatus } from '../types'
 import ImprovementCard from './ImprovementCard'
 import AddItemModal from './AddItemModal'
 import { buildKanbanUrl } from '../utils/kanbanLink'
+import { ChartIcon, TargetIcon, CheckboxCheckedIcon, ClipboardIcon } from './icons'
 
 const COLUMNS: ImprovementStatus[] = ['identified', 'in_progress', 'done']
 const SPRINT_METRICS_URL = 'https://agile-toolkit.github.io/sprint-metrics/'
@@ -139,7 +140,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
     <div className={selectMode && selectedIds.size > 0 ? 'pb-20' : undefined}>
       {fromSprintMetrics && (
         <div className="mb-4 flex items-center gap-2 text-sm text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2">
-          <span>📊</span>
+          <ChartIcon className="w-4 h-4" />
           <span>{t('board.from_sprint_metrics')}</span>
           <a
             href={SPRINT_METRICS_URL}
@@ -153,7 +154,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
       )}
       {fromMovingMotivators && (
         <div className="mb-4 flex items-center gap-2 text-sm text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2">
-          <span>🎯</span>
+          <TargetIcon className="w-4 h-4" />
           <span>{t('board.from_moving_motivators')}</span>
           <a
             href={MOVING_MOTIVATORS_URL}
@@ -253,9 +254,9 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
           <button
             onClick={toggleSelectMode}
             aria-pressed={selectMode}
-            className={`btn-secondary text-xs ${selectMode ? 'bg-brand-600 text-white' : ''}`}
+            className={`btn-secondary text-xs inline-flex items-center gap-1 ${selectMode ? 'bg-brand-600 text-white' : ''}`}
           >
-            ☑ {t('board.select_items')}
+            <CheckboxCheckedIcon className="w-3.5 h-3.5" /> {t('board.select_items')}
           </button>
           <button onClick={() => setShowAdd(true)} title={t('board.add_shortcut_hint')} className="btn-primary">
             + {t('board.add')}
@@ -265,7 +266,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
 
       {items.length === 0 && (
         <div className="text-center py-16 text-gray-400 dark:text-gray-500">
-          <div className="text-5xl mb-4">📋</div>
+          <ClipboardIcon className="w-12 h-12 mx-auto mb-4 text-slate-300 dark:text-gray-600" />
           <p>{t('board.empty')}</p>
         </div>
       )}
@@ -313,7 +314,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
           rel="noopener noreferrer"
           className="flex items-center gap-1 hover:text-brand-600 transition-colors"
         >
-          📊 {t('board.open_sprint_metrics')}
+          <ChartIcon className="w-3.5 h-3.5" /> {t('board.open_sprint_metrics')}
         </a>
       </div>
 

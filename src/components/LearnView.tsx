@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { CheckIcon } from './icons'
+import { CheckIcon, ChatIcon, TeamIcon, StopwatchIcon } from './icons'
 
 export default function LearnView() {
   const { t } = useTranslation()
   const sections = [
-    { title: 'dialogue_title', body: 'dialogue_body', icon: '💬' },
-    { title: 'copilot_title', body: 'copilot_body', icon: '🤝' },
-    { title: 'problem_time_title', body: 'problem_time_body', icon: '⏱' },
+    { title: 'dialogue_title', body: 'dialogue_body', Icon: ChatIcon },
+    { title: 'copilot_title', body: 'copilot_body', Icon: TeamIcon },
+    { title: 'problem_time_title', body: 'problem_time_body', Icon: StopwatchIcon },
   ]
   const principles = ['p1', 'p2', 'p3', 'p4'] as const
 
@@ -16,7 +16,7 @@ export default function LearnView() {
       {sections.map(s => (
         <div key={s.title} className="card">
           <div className="flex items-start gap-3">
-            <span className="text-2xl">{s.icon}</span>
+            <span className="text-gray-400 dark:text-gray-500 mt-0.5"><s.Icon className="w-5 h-5" /></span>
             <div>
               <h2 className="font-semibold text-gray-900 dark:text-gray-50 mb-2">{t(`learn.${s.title}`)}</h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{t(`learn.${s.body}`)}</p>

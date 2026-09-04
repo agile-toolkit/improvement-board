@@ -5,7 +5,7 @@ import type { ImprovementItem, TeamMember, Category, ImprovementStatus } from '.
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildKanbanUrl } from '../utils/kanbanLink'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
-import { CloseIcon } from './icons'
+import { CloseIcon, PersonIcon, ChatIcon, LinkIcon } from './icons'
 
 interface Props {
   items: ImprovementItem[]
@@ -442,8 +442,8 @@ function ItemCard({
           />
         )}
         {(copilot || item.copilot) && (
-          <span className="text-xs text-slate-400 dark:text-gray-500">
-            👤 {copilot?.name ?? item.copilot}
+          <span className="inline-flex items-center gap-1 text-xs text-slate-400 dark:text-gray-500">
+            <PersonIcon className="w-3.5 h-3.5" /> {copilot?.name ?? item.copilot}
           </span>
         )}
         {dueDateState !== 'none' && item.dueDate && (
@@ -456,7 +456,9 @@ function ItemCard({
           </span>
         )}
         {(item.comments?.length ?? 0) > 0 && (
-          <span className="text-xs text-slate-400 dark:text-gray-500">💬 {item.comments!.length}</span>
+          <span className="inline-flex items-center gap-1 text-xs text-slate-400 dark:text-gray-500">
+            <ChatIcon className="w-3.5 h-3.5" /> {item.comments!.length}
+          </span>
         )}
         <a
           href={buildChangePlannerUrl(item)}
@@ -464,9 +466,9 @@ function ItemCard({
           rel="noopener noreferrer"
           title={t('board.promote_to_change_planner')}
           aria-label={t('board.promote_to_change_planner')}
-          className="text-xs text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none ml-auto"
+          className="text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none ml-auto"
         >
-          ↗
+          <LinkIcon className="w-3.5 h-3.5" />
         </a>
         <button
           type="button"

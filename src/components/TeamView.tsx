@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TeamMember, ImprovementItem } from '../types'
+import { PersonIcon } from './icons'
 
 interface Props {
   members: TeamMember[]
@@ -103,7 +104,9 @@ export default function TeamView({ members, items, onMembers, onItems }: Props) 
                 className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-lg px-4 py-2 flex items-center justify-between shadow-sm"
               >
                 <span className="text-sm text-slate-700 dark:text-gray-300">{item.title}</span>
-                <span className="text-xs text-brand-600 font-medium">👤 {item.copilot}</span>
+                <span className="inline-flex items-center gap-1 text-xs text-brand-600 font-medium">
+                  <PersonIcon className="w-3.5 h-3.5" /> {item.copilot}
+                </span>
               </div>
             ))}
           </div>
