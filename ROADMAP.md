@@ -9,6 +9,8 @@ None — idle. See `## Next epics` below.
 None — idle. See `## Recently shipped` below.
 
 ## Recently shipped
+**Moving Motivators deep-link on cards** (2026-09-05) — see `## Shipped`. An "Assess motivator impact" icon link on every card opens Moving Motivators with `?change=<title>` pre-filled — Direction A of [moving-motivators#53](https://github.com/agile-toolkit/moving-motivators/issues/53), a cross-repo issue whose code change belongs in this app. No Moving Motivators-side change needed; it already reads that param.
+
 **E1 + E2 + E3 remainder: cross-app integrations, reporting & analytics, tags** (2026-09-05) — see `## Shipped`. Closes [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags, filterable, hash-derived colours), [#37](https://github.com/agile-toolkit/improvement-board/issues/37) (sprint history analytics — a completed-items-per-sprint bar chart + category breakdown; the "identified vs. done" split originally proposed isn't recoverable from `SprintArchive`'s data model, which only stores an archived sprint's *done* items), [#40](https://github.com/agile-toolkit/improvement-board/issues/40) (Planning Poker effort-estimate badge and deep-link — reads the actual `planning-poker:history` key, not the issue's guessed `pp-session-history`), [#38](https://github.com/agile-toolkit/improvement-board/issues/38) (Scrum Facilitator retro action-item import), and [#41](https://github.com/agile-toolkit/improvement-board/issues/41) (CSV/Markdown-text export). Also closed [#42](https://github.com/agile-toolkit/improvement-board/issues/42) as an oversight — inline title quick-edit was already fully shipped 2026-09-02, so only #39/#37/#40/#38/#41 needed new code this round.
 
 **Add glass effect to the header** (2026-09-04) — see `## Shipped`. `AppHeader.tsx`'s background changed to a translucent blur, matching the Dashboard's own nav — user-reported inconsistency.
@@ -39,6 +41,7 @@ sessions' environments.
 - No polish-only items without a filed issue at this time — everything currently queued is tracked above or already shipped.
 
 ## Shipped
+- ~~Moving Motivators "Assess motivator impact" deep-link on cards~~ (2026-09-05)
 - ~~Custom tags on improvement items, filterable board-wide, with
   hash-derived colours and autocomplete~~ (2026-09-05)
 - ~~Sprint history analytics tab — items-completed-per-sprint bar chart,

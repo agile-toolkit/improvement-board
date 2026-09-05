@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 0.4.1 — Moving Motivators deep-link on cards (2026-09-05)
+
+- **feature**: an "Assess motivator impact with Moving Motivators" icon
+  link (`src/utils/movingMotivatorsLink.ts`) on every card in both Board
+  and Kanban views, opening Moving Motivators with `?change=<title>` —
+  a query param its `App.tsx` already reads and pre-fills into the
+  change-assessment screen, so no changes were needed on that side.
+  Implements Direction A (the issue's own "minimal first step") of
+  [moving-motivators#53](https://github.com/agile-toolkit/moving-motivators/issues/53),
+  filed in that repo but whose code change belongs here. Always visible
+  on every card rather than gated by category, matching how the
+  existing Change Planner and Planning Poker links work.
+
 ## 0.4.0 — Tags, sprint history, Planning Poker & Scrum Facilitator integrations, CSV export (2026-09-05)
 
 - **feature**: custom labels/tags on improvement items

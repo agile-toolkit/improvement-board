@@ -81,6 +81,7 @@
     "reset_votes_confirm": "Сбросить все счётчики голосов до нуля?",
     "add_shortcut_hint": "Нажмите N для добавления элемента",
     "promote_to_change_planner": "Повысить до Change Planner",
+    "assess_with_mm": "Оценить влияние на мотивацию через Moving Motivators",
     "select_items": "Выбрать элементы",
     "select_item": "Выбрать элемент",
     "selected_count": "{{count}} выбрано",

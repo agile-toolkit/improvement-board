@@ -6,9 +6,10 @@ import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOl
 import { buildKanbanUrl } from '../utils/kanbanLink'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
 import { buildPokerUrl, getLastEstimate } from '../utils/planningPokerLink'
+import { buildMovingMotivatorsUrl } from '../utils/movingMotivatorsLink'
 import { tagColorClasses } from '../utils/tagColor'
 import { downloadCsv } from '../utils/csvExport'
-import { CloseIcon, PersonIcon, ChatIcon, LinkIcon, CardsIcon, ArrowRightIcon, DownloadIcon, TagIcon } from './icons'
+import { CloseIcon, PersonIcon, ChatIcon, LinkIcon, CardsIcon, ArrowRightIcon, DownloadIcon, TagIcon, TargetIcon } from './icons'
 
 interface Props {
   items: ImprovementItem[]
@@ -556,6 +557,16 @@ function ItemCard({
           className="text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
         >
           <LinkIcon className="w-3.5 h-3.5" />
+        </a>
+        <a
+          href={buildMovingMotivatorsUrl(item.title)}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={t('board.assess_with_mm')}
+          aria-label={t('board.assess_with_mm')}
+          className="text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
+        >
+          <TargetIcon className="w-3.5 h-3.5" />
         </a>
         <button
           type="button"
