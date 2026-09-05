@@ -6,11 +6,11 @@ Derived from GOAL.md. Rebuilt when GOAL changes or an epic ships.
 None — idle. See `## Next epics` below.
 
 ## Next epics
-1. **E1: Cross-app estimation & retro-import integrations** — serves signal #1 (loop closes faster when items arrive pre-populated instead of re-typed). Two `needs-review` integration issues, both past the 7-day staleness threshold: [#40](https://github.com/agile-toolkit/improvement-board/issues/40) (Planning Poker deep-link for effort estimation, reading `pp-session-history`) and [#38](https://github.com/agile-toolkit/improvement-board/issues/38) (Scrum Facilitator retro action-item import, mirroring the existing Moving Motivators import pattern). Both follow the established deep-link + localStorage-read convention already used for Sprint Metrics and Moving Motivators.
-2. **E2: Reporting & analytics** — serves signal #2, #3. Two `needs-review` issues past the 7-day staleness threshold: [#41](https://github.com/agile-toolkit/improvement-board/issues/41) (CSV/text export of all items for management reporting) and [#37](https://github.com/agile-toolkit/improvement-board/issues/37) (sprint history analytics tab visualising the existing `improvement-board:sprintHistory` archive). Both give facilitators and management a structured view beyond the live board.
-3. **E3 remainder: custom tags** — serves signal #1, #2. [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags for cross-cutting themes, filterable alongside existing sort/status controls) — `needs-review`, past the 7-day staleness threshold.
+None — idle. See `## Recently shipped` below.
 
 ## Recently shipped
+**E1 + E2 + E3 remainder: cross-app integrations, reporting & analytics, tags** (2026-09-05) — see `## Shipped`. Closes [#39](https://github.com/agile-toolkit/improvement-board/issues/39) (custom tags, filterable, hash-derived colours), [#37](https://github.com/agile-toolkit/improvement-board/issues/37) (sprint history analytics — a completed-items-per-sprint bar chart + category breakdown; the "identified vs. done" split originally proposed isn't recoverable from `SprintArchive`'s data model, which only stores an archived sprint's *done* items), [#40](https://github.com/agile-toolkit/improvement-board/issues/40) (Planning Poker effort-estimate badge and deep-link — reads the actual `planning-poker:history` key, not the issue's guessed `pp-session-history`), [#38](https://github.com/agile-toolkit/improvement-board/issues/38) (Scrum Facilitator retro action-item import), and [#41](https://github.com/agile-toolkit/improvement-board/issues/41) (CSV/Markdown-text export). Also closed [#42](https://github.com/agile-toolkit/improvement-board/issues/42) as an oversight — inline title quick-edit was already fully shipped 2026-09-02, so only #39/#37/#40/#38/#41 needed new code this round.
+
 **Add glass effect to the header** (2026-09-04) — see `## Shipped`. `AppHeader.tsx`'s background changed to a translucent blur, matching the Dashboard's own nav — user-reported inconsistency.
 
 **Facilitator Mode persists across suite apps** (2026-09-03) — see `## Shipped`. `useFacilitatorMode`'s storage key changed to the shared `agile-toolkit:facilitatorMode` so the mode survives switching to another suite app in the same tab, per direct user request.
@@ -27,7 +27,7 @@ None — idle. See `## Next epics` below.
 
 **Fix: invisible brand-color borders/backgrounds + utils test coverage** (2026-09-02) — see `## Shipped`. A suite-wide audit found `brand-200`/`300`/`800`/`900` referenced in 4 files (`ProblemTimer.tsx`, `TeamView.tsx`, `AppHeader.tsx`, `DialogueView.tsx`) but undefined in `tailwind.config.js` — invisible borders/backgrounds/text in both light and dark mode. Completed the `brand` scale with Tailwind's own `green` values (the palette the existing 6 shades were already drawn from). Also added this repo's first automated test coverage.
 
-**E3 (partial): inline quick-edit of card title** (2026-09-02) — see `## Shipped`. [#42](https://github.com/agile-toolkit/improvement-board/issues/42) shipped; #39 (custom tags) remains queued above as the rest of E3.
+**E3 (partial): inline quick-edit of card title** (2026-09-02) — see `## Shipped`. [#42](https://github.com/agile-toolkit/improvement-board/issues/42) shipped; #39 (custom tags) shipped 2026-09-05, see above.
 
 ## Repo cleanup (2026-09-02)
 Closed 10 stale `approved` issues (#3, #7–#12, #15, #17, #19) that were
@@ -39,6 +39,13 @@ sessions' environments.
 - No polish-only items without a filed issue at this time — everything currently queued is tracked above or already shipped.
 
 ## Shipped
+- ~~Custom tags on improvement items, filterable board-wide, with
+  hash-derived colours and autocomplete~~ (2026-09-05)
+- ~~Sprint history analytics tab — items-completed-per-sprint bar chart,
+  category breakdown, sprint-over-sprint trend~~ (2026-09-05)
+- ~~Planning Poker effort-estimate badge and deep-link on cards~~ (2026-09-05)
+- ~~Scrum Facilitator retro action-item import in the add-item modal~~ (2026-09-05)
+- ~~CSV and Markdown-text export of all improvement items~~ (2026-09-05)
 - ~~Add glass/backdrop-blur effect to the header, matching the Dashboard's own nav~~
 - ~~Unify Facilitator Mode's storage key to the shared `agile-toolkit:facilitatorMode` so it persists across suite apps~~
 - ~~Fix a card delete button using the × variant instead of ✕~~

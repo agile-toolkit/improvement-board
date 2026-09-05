@@ -1,6 +1,6 @@
 export type ImprovementStatus = 'identified' | 'in_progress' | 'done'
 export type Category = 'process' | 'technical' | 'people' | 'product' | 'other'
-export type Screen = 'board' | 'kanban' | 'team' | 'dialogue' | 'timer' | 'learn'
+export type Screen = 'board' | 'kanban' | 'team' | 'dialogue' | 'timer' | 'history' | 'learn'
 
 export interface SprintArchive {
   sprintNumber: number
@@ -40,4 +40,6 @@ export interface ImprovementItem {
   dueDate?: number
   /** Team upvote count for priority sorting */
   votes?: number
+  /** Free-form cross-cutting theme tags (e.g. "Q2 OKR", "tech-debt") */
+  tags?: string[]
 }

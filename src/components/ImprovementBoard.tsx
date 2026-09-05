@@ -5,7 +5,10 @@ import type { ImprovementItem, TeamMember, Category, ImprovementStatus } from '.
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildKanbanUrl } from '../utils/kanbanLink'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
-import { CloseIcon, PersonIcon, ChatIcon, LinkIcon, ArrowRightIcon } from './icons'
+import { buildPokerUrl, getLastEstimate } from '../utils/planningPokerLink'
+import { tagColorClasses } from '../utils/tagColor'
+import { downloadCsv } from '../utils/csvExport'
+import { CloseIcon, PersonIcon, ChatIcon, LinkIcon, CardsIcon, ArrowRightIcon, DownloadIcon, TagIcon } from './icons'
 
 interface Props {
   items: ImprovementItem[]
@@ -41,7 +44,10 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
   const [adding, setAdding] = useState(false)
   const [sortMode, setSortMode] = useState<SortMode>('default')
   const [exportState, setExportState] = useState<'idle' | 'busy' | 'done'>('idle')
+  const [csvState, setCsvState] = useState<'idle' | 'done'>('idle')
+  const [tagFilter, setTagFilter] = useState<string | null>(null)
   const boardRef = useRef<HTMLDivElement>(null)
+  const allTags = Array.from(new Set(items.flatMap(i => i.tags ?? []))).sort()
 
   async function handleExport() {
     if (!boardRef.current || exportState === 'busy') return
@@ -70,11 +76,13 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
     category: 'process' as Category,
     copilotName: '',
     dueDateStr: '',
+    tagsStr: '',
   })
 
   function addItem() {
     if (!form.title.trim()) return
     const dueDate = form.dueDateStr ? new Date(form.dueDateStr).getTime() : undefined
+    const tags = form.tagsStr.split(',').map(t2 => t2.trim()).filter(Boolean)
     const item: ImprovementItem = {
       id: crypto.randomUUID(),
       title: form.title.trim(),
@@ -87,9 +95,10 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
       updatedAt: Date.now(),
       dialogueNotes: '',
       dueDate,
+      tags: tags.length > 0 ? tags : undefined,
     }
     onItems([...items, item])
-    setForm({ title: '', description: '', category: 'process', copilotName: '', dueDateStr: '' })
+    setForm({ title: '', description: '', category: 'process', copilotName: '', dueDateStr: '', tagsStr: '' })
     setAdding(false)
   }
 
@@ -123,7 +132,8 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
   }
 
   function colItems(status: ImprovementStatus) {
-    const filtered = items.filter(i => i.status === status)
+    const byTag = tagFilter ? items.filter(i => i.tags?.includes(tagFilter)) : items
+    const filtered = byTag.filter(i => i.status === status)
     if (sortMode === 'due') {
       return [...filtered].sort((a, b) => {
         if (a.dueDate && b.dueDate) return a.dueDate - b.dueDate
@@ -139,6 +149,13 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
       return [...filtered].sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
     }
     return filtered
+  }
+
+  function handleDownloadCsv() {
+    const exportable = STATUSES.flatMap(colItems)
+    downloadCsv(exportable)
+    setCsvState('done')
+    setTimeout(() => setCsvState('idle'), 2000)
   }
 
   return (
@@ -221,6 +238,14 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
               ? t('board.export_copied')
               : t('board.export_png')}
           </button>
+          <button
+            type="button"
+            onClick={handleDownloadCsv}
+            className="border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors inline-flex items-center gap-1"
+          >
+            <DownloadIcon className="w-3.5 h-3.5" />
+            {csvState === 'done' ? t('board.export_csv_done') : t('board.export_csv')}
+          </button>
           {items.some(i => i.status === 'done') && (
             <button
               type="button"
@@ -244,6 +269,33 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
           </button>
         </div>
       </div>
+
+      {allTags.length > 0 && (
+        <div className="flex items-center gap-2 flex-wrap" role="group" aria-label={t('board.filter_by_tag')}>
+          <TagIcon className="w-3.5 h-3.5 text-slate-400 dark:text-gray-500 shrink-0" />
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => setTagFilter(f => (f === tag ? null : tag))}
+              className={`text-xs px-2 py-0.5 rounded-full font-medium transition-all ${tagColorClasses(tag)} ${
+                tagFilter === tag ? 'ring-2 ring-brand-400' : tagFilter ? 'opacity-40' : ''
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+          {tagFilter && (
+            <button
+              type="button"
+              onClick={() => setTagFilter(null)}
+              className="text-xs text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300 underline"
+            >
+              {t('board.clear_tag_filter')}
+            </button>
+          )}
+        </div>
+      )}
 
       {adding && (
         <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-xl p-4 shadow-sm space-y-3">
@@ -295,6 +347,17 @@ export default function ImprovementBoard({ items, members, onItems, onVote, onRe
               className="bg-white dark:bg-gray-900 border border-slate-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               placeholder={t('add_form.label_due_date')}
             />
+            <input
+              type="text"
+              list="kanban-tag-suggestions"
+              value={form.tagsStr}
+              onChange={e => setForm(f => ({ ...f, tagsStr: e.target.value }))}
+              className="bg-white dark:bg-gray-900 border border-slate-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+              placeholder={t('add_form.tags_placeholder')}
+            />
+            <datalist id="kanban-tag-suggestions">
+              {allTags.map(tag => <option key={tag} value={tag} />)}
+            </datalist>
           </div>
           <div className="flex gap-2">
             <button
@@ -377,6 +440,7 @@ function ItemCard({
   const [expanded, setExpanded] = useState(false)
   const [editingTitle, setEditingTitle] = useState(false)
   const [draftTitle, setDraftTitle] = useState(item.title)
+  const lastEstimate = getLastEstimate(item.title)
   const copilot = members.find(m => m.name === item.copilot)
   const dueDateState = getDueDateState(item.dueDate, item.status === 'done')
   const ageState = getAgeState(item.updatedAt, item.status === 'done')
@@ -460,13 +524,36 @@ function ItemCard({
             <ChatIcon className="w-3.5 h-3.5" /> {item.comments!.length}
           </span>
         )}
+        {item.tags?.map(tag => (
+          <span key={tag} className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${tagColorClasses(tag)}`}>
+            {tag}
+          </span>
+        ))}
+        {lastEstimate && (
+          <span
+            className="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 text-slate-500 dark:text-gray-400 font-medium ml-auto"
+            title={t('board.effort_badge_tooltip')}
+          >
+            {t('board.effort_badge', { sp: lastEstimate })}
+          </span>
+        )}
+        <a
+          href={buildPokerUrl(item.title)}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={t('board.estimate_in_poker')}
+          aria-label={t('board.estimate_in_poker')}
+          className={`text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none ${lastEstimate ? '' : 'ml-auto'}`}
+        >
+          <CardsIcon className="w-3.5 h-3.5" />
+        </a>
         <a
           href={buildChangePlannerUrl(item)}
           target="_blank"
           rel="noopener noreferrer"
           title={t('board.promote_to_change_planner')}
           aria-label={t('board.promote_to_change_planner')}
-          className="text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none ml-auto"
+          className="text-slate-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
         >
           <LinkIcon className="w-3.5 h-3.5" />
         </a>

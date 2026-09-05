@@ -10,6 +10,7 @@ import ImprovementBoard from './components/ImprovementBoard'
 import DialogueView from './components/DialogueView'
 import ProblemTimer from './components/ProblemTimer'
 import TeamView from './components/TeamView'
+import HistoryView from './components/HistoryView'
 import LearnView from './components/LearnView'
 import UpdateToast from './components/UpdateToast'
 
@@ -91,6 +92,7 @@ export default function App() {
   const prefillTitle = urlParams.get('prefill') ?? undefined
   const fromSprintMetrics = urlParams.get('utm_source') === 'sprint-metrics'
   const fromMovingMotivators = urlParams.get('utm_source') === 'moving-motivators'
+  const fromScrumFacilitator = urlParams.get('utm_source') === 'scrum-facilitator'
 
   const updateItems = (updated: ImprovementItem[]) => {
     setItems(updated)
@@ -148,6 +150,7 @@ export default function App() {
           { key: 'team', label: t('nav.team'), active: screen === 'team', onClick: () => setScreen('team') },
           { key: 'dialogue', label: t('nav.dialogue'), active: screen === 'dialogue', onClick: () => setScreen('dialogue') },
           { key: 'timer', label: t('nav.timer'), active: screen === 'timer', onClick: () => setScreen('timer') },
+          { key: 'history', label: t('nav.history'), active: screen === 'history', onClick: () => setScreen('history') },
           { key: 'learn', label: t('nav.learn'), active: screen === 'learn', onClick: () => setScreen('learn') },
         ]}
       >
@@ -181,6 +184,7 @@ export default function App() {
             prefillTitle={prefillTitle}
             fromSprintMetrics={fromSprintMetrics}
             fromMovingMotivators={fromMovingMotivators}
+            fromScrumFacilitator={fromScrumFacilitator}
             currentSprint={sprintHistory.length + 1}
             onEndSprint={handleEndSprint}
           />
@@ -226,6 +230,7 @@ export default function App() {
           />
         )}
         {screen === 'timer' && <ProblemTimer />}
+        {screen === 'history' && <HistoryView sprintHistory={sprintHistory} />}
         {screen === 'learn' && <LearnView />}
       </main>
       <UpdateToast />

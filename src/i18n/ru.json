@@ -10,6 +10,7 @@
     "team": "Команда",
     "dialogue": "Диалог",
     "timer": "Problem Time",
+    "history": "История",
     "learn": "Обучение"
   },
   "kanban": {
@@ -91,7 +92,18 @@
     "delete_selected": "Удалить выбранные",
     "delete_selected_confirm": "Удалить {{count}} выбранный(х) элемент(ов)?",
     "edit_title": "Изменить заголовок",
-    "edit_title_hint": "Двойной клик для редактирования"
+    "edit_title_hint": "Двойной клик для редактирования",
+    "estimate_in_poker": "Оценить в Planning Poker",
+    "effort_badge": "{{sp}} SP",
+    "effort_badge_tooltip": "Последняя оценка из Planning Poker",
+    "from_scrum_facilitator": "Открыто из Scrum Facilitator — ваш элемент улучшения предзаполнен.",
+    "open_scrum_facilitator": "Открыть Scrum Facilitator",
+    "export_csv": "Скачать CSV",
+    "export_csv_done": "Скачано!",
+    "copy_text": "Скопировать как текст",
+    "copy_text_done": "Скопировано!",
+    "filter_by_tag": "Фильтр по тегу",
+    "clear_tag_filter": "Сбросить фильтр по тегу"
   },
   "add_form": {
     "title": "Новый элемент улучшения",
@@ -105,6 +117,10 @@
     "placeholder_description": "Опишите проблему или возможность...",
     "placeholder_owner": "Кто отвечает?",
     "placeholder_copilot": "Кто будет коучем?",
+    "label_tags": "Теги (необязательно)",
+    "tags_placeholder": "Введите тег, затем Enter или запятую",
+    "tags_hint": "Сквозные темы вроде «Q2 OKR» или «технический долг» — Enter или запятая добавляют тег.",
+    "remove_tag": "Удалить тег {{tag}}",
     "submit": "Добавить на доску",
     "cancel": "Отмена",
     "categories": {
@@ -119,6 +135,10 @@
       "hint": "Мотиваторы вашей команды с наименьшей оценкой за последнюю сессию. Нажмите на один, чтобы предзаполнить элемент улучшения.",
       "suggestion_title": "Улучшить «{{motivator}}»",
       "suggestion_description": "Команда поставила «{{motivator}}» на {{rank}}-е место из 10 в последней сессии Moving Motivators."
+    },
+    "import_sf": {
+      "toggle": "Импорт из Scrum Facilitator",
+      "hint": "Пункты действий из вашей последней ретро. Нажмите на один, чтобы предзаполнить элемент улучшения."
     }
   },
   "motivators": {
@@ -170,6 +190,18 @@
     "step4": "Команда задаёт только уточняющие вопросы.",
     "step5": "Последние 3 мин: договоритесь об одном следующем действии.",
     "step6": "Обновите доску с результатом."
+  },
+  "history": {
+    "title": "История спринтов",
+    "empty": "Пока нет истории спринтов — используйте «Завершить спринт», чтобы архивировать первый спринт.",
+    "chart_title": "Завершено элементов по спринтам",
+    "bar_tooltip": "Спринт {{n}}: завершено {{count}}",
+    "breakdown_title": "Разбивка по категориям",
+    "sprint_column": "Спринт",
+    "sprint_n": "Спринт {{n}}",
+    "total": "Всего",
+    "trend": "Тренд",
+    "no_change": "Без изменений"
   },
   "learn": {
     "title": "О практиках улучшения",

@@ -10,6 +10,7 @@
     "team": "Equipo",
     "dialogue": "Diálogo",
     "timer": "Tiempo Problema",
+    "history": "Historial",
     "learn": "Aprender"
   },
   "kanban": {
@@ -91,7 +92,18 @@
     "delete_selected": "Eliminar seleccionados",
     "delete_selected_confirm": "¿Eliminar {{count}} elemento(s) seleccionado(s)?",
     "edit_title": "Editar título",
-    "edit_title_hint": "Doble clic para editar"
+    "edit_title_hint": "Doble clic para editar",
+    "estimate_in_poker": "Estimar en Planning Poker",
+    "effort_badge": "{{sp}} SP",
+    "effort_badge_tooltip": "Última estimación de Planning Poker",
+    "from_scrum_facilitator": "Abierto desde Scrum Facilitator — tu elemento de mejora está prellenado.",
+    "open_scrum_facilitator": "Abrir Scrum Facilitator",
+    "export_csv": "Descargar CSV",
+    "export_csv_done": "¡Descargado!",
+    "copy_text": "Copiar como texto",
+    "copy_text_done": "¡Copiado!",
+    "filter_by_tag": "Filtrar por etiqueta",
+    "clear_tag_filter": "Quitar filtro de etiqueta"
   },
   "add_form": {
     "title": "Nuevo Ítem de Mejora",
@@ -105,6 +117,10 @@
     "placeholder_description": "Describe el problema u oportunidad...",
     "placeholder_owner": "¿Quién es el responsable?",
     "placeholder_copilot": "¿Quién será el coach?",
+    "label_tags": "Etiquetas (opcional)",
+    "tags_placeholder": "Escribe una etiqueta y pulsa Enter o coma",
+    "tags_hint": "Temas transversales como \"OKR Q2\" o \"deuda técnica\" — pulsa Enter o coma para añadir.",
+    "remove_tag": "Quitar etiqueta {{tag}}",
     "submit": "Agregar al Tablero",
     "cancel": "Cancelar",
     "categories": {
@@ -119,6 +135,10 @@
       "hint": "Los motivadores con menor puntuación de tu equipo en la última sesión. Haz clic en uno para precompletar un ítem de mejora.",
       "suggestion_title": "Mejorar {{motivator}}",
       "suggestion_description": "El equipo clasificó {{motivator}} en el puesto {{rank}} de 10 en la última sesión de Moving Motivators."
+    },
+    "import_sf": {
+      "toggle": "Importar desde Scrum Facilitator",
+      "hint": "Elementos de acción de tu última retro. Haz clic en uno para precompletar un ítem de mejora."
     }
   },
   "motivators": {
@@ -170,6 +190,18 @@
     "step4": "El equipo hace solo preguntas clarificadoras.",
     "step5": "Últimos 3 min: acuerda una próxima acción.",
     "step6": "Actualiza el tablero con el resultado."
+  },
+  "history": {
+    "title": "Historial de Sprints",
+    "empty": "Aún no hay historial de sprints — usa Finalizar Sprint para archivar tu primer sprint.",
+    "chart_title": "Ítems completados por sprint",
+    "bar_tooltip": "Sprint {{n}}: {{count}} completados",
+    "breakdown_title": "Desglose por categoría",
+    "sprint_column": "Sprint",
+    "sprint_n": "Sprint {{n}}",
+    "total": "Total",
+    "trend": "Tendencia",
+    "no_change": "Sin cambios"
   },
   "learn": {
     "title": "Acerca de las Prácticas de Mejora",

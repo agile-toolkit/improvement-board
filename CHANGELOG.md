@@ -2,6 +2,68 @@
 
 ## Unreleased
 
+## 0.4.0 — Tags, sprint history, Planning Poker & Scrum Facilitator integrations, CSV export (2026-09-05)
+
+- **feature**: custom labels/tags on improvement items
+  (`ImprovementItem.tags?: string[]`). Add tags in the "New Improvement
+  Item" modal (pill input, Enter/comma to commit, hash-derived colour
+  so the same tag always renders the same colour) and the Kanban
+  inline-add form (comma-separated text field); both offer autocomplete
+  from tags already used on the board via a native `<datalist>`. Tags
+  display as pills on cards in both Board and Kanban views, and a tag
+  filter bar (click a pill to filter, click again to clear) appears in
+  both view headers once at least one item has a tag. Tags carry
+  forward into `SprintArchive` unchanged, since archiving just snapshots
+  the full item. ([#39](https://github.com/agile-toolkit/improvement-board/issues/39))
+- **feature**: sprint history analytics — a new **History** nav item and
+  screen (`HistoryView.tsx`) visualizing `improvement-board:sprintHistory`
+  as a pure-SVG bar chart (items completed per sprint) plus a
+  category-breakdown table with a sprint-over-sprint trend indicator.
+  Note: `SprintArchive.items` only ever holds the *done* items from a
+  sprint (see `handleEndSprint` in `App.tsx`) — the "identified vs. done"
+  split proposed in the issue isn't recoverable from this data model, so
+  the chart shows completed-item velocity instead, which is what the
+  data actually supports. Scoped to completed archived sprints only, no
+  "live" in-progress column. Empty state when no sprint has been
+  archived yet. ([#37](https://github.com/agile-toolkit/improvement-board/issues/37))
+- **feature**: Planning Poker effort estimates on cards. A new "Estimate
+  in Planning Poker" link (`src/utils/planningPokerLink.ts`) opens
+  Planning Poker with the item's title prefilled; if a past Planning
+  Poker session already estimated a story with a matching title
+  (trimmed, case-insensitive), its final estimate shows as an "N SP"
+  badge directly on the card in both Board and Kanban views. Reads the
+  actual `planning-poker:history` key (`SessionHistoryEntry[]`) — the
+  issue's proposed key (`pp-session-history`) doesn't exist in that
+  app's source, confirmed by reading it directly; card values are
+  free-form strings (some decks use "☕"/"?", not just numbers), so the
+  badge and lookup handle non-numeric estimates too.
+  ([#40](https://github.com/agile-toolkit/improvement-board/issues/40))
+- **feature**: import retro action items from Scrum Facilitator. A
+  collapsible "Import from Scrum Facilitator" section in the "New
+  Improvement Item" modal (mirrors the existing Moving Motivators import
+  pattern) lists up to 5 action items (`StickyNote.isAction === true`)
+  from the current/most recent ceremony (`scrum-facilitator-session`,
+  ignored if older than 24h) and from `scrum-facilitator-history`,
+  already-imported titles skipped. Clicking one pre-fills the title and
+  a description noting the retro column (and note owner, if set).
+  Opening Improvement Board from Scrum Facilitator's own deep-link
+  (`?utm_source=scrum-facilitator`) shows the same banner pattern
+  already used for Sprint Metrics and Moving Motivators.
+  ([#38](https://github.com/agile-toolkit/improvement-board/issues/38))
+- **feature**: CSV and Markdown-text export
+  (`src/utils/csvExport.ts`) alongside the existing PNG export, in both
+  Board and Kanban view headers. Exports respect the current tag filter
+  and sort order — the same items and order the view currently shows.
+  Columns: Title, Category, Status, Owner, Copilot, Due Date, Votes,
+  Comments (count), Tags, Created, Updated.
+  ([#41](https://github.com/agile-toolkit/improvement-board/issues/41))
+- **chore**: closed [#42](https://github.com/agile-toolkit/improvement-board/issues/42)
+  (inline quick-edit of item title) as already fully shipped in both
+  `ImprovementCard.tsx` and `ImprovementBoard.tsx` — double-click to
+  edit, Enter/blur to save, Escape to revert, matching the issue's own
+  proposed interaction model exactly. Just missed being closed at the
+  time.
+
 ## 0.3.2 — Add glass effect to the header (2026-09-04)
 
 - **fix**: `AppHeader.tsx`'s background changed from opaque

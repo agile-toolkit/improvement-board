@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next'
 import type { ImprovementItem } from '../types'
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
-import { CloseIcon, ChatIcon, LinkIcon } from './icons'
+import { buildPokerUrl, getLastEstimate } from '../utils/planningPokerLink'
+import { tagColorClasses } from '../utils/tagColor'
+import { CloseIcon, ChatIcon, LinkIcon, CardsIcon } from './icons'
 
 const CATEGORY_COLORS: Record<string, string> = {
   process: 'bg-blue-100 text-blue-700',
@@ -32,6 +34,7 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
   const daysOld = ageDaysOld(item.updatedAt)
   const [editing, setEditing] = useState(false)
   const [draftTitle, setDraftTitle] = useState(item.title)
+  const lastEstimate = getLastEstimate(item.title)
 
   const startEditing = () => {
     if (!onRename) return
@@ -104,6 +107,15 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
       {item.description && (
         <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 leading-relaxed">{item.description}</p>
       )}
+      {item.tags && item.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-2">
+          {item.tags.map(tag => (
+            <span key={tag} className={`text-xs px-2 py-0.5 rounded-full font-medium ${tagColorClasses(tag)}`}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
       <div className="text-xs text-gray-400 dark:text-gray-500 space-y-0.5 mb-2">
         <div>{t('board.owner')}: <span className="text-gray-600 dark:text-gray-300">{item.owner || '—'}</span></div>
         <div>
@@ -141,6 +153,24 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
               <ChatIcon className="w-3.5 h-3.5" /> {item.comments!.length}
             </span>
           )}
+          {lastEstimate && (
+            <span
+              className="text-xs px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-medium"
+              title={t('board.effort_badge_tooltip')}
+            >
+              {t('board.effort_badge', { sp: lastEstimate })}
+            </span>
+          )}
+          <a
+            href={buildPokerUrl(item.title)}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={t('board.estimate_in_poker')}
+            aria-label={t('board.estimate_in_poker')}
+            className="text-gray-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
+          >
+            <CardsIcon className="w-3.5 h-3.5" />
+          </a>
           <a
             href={buildChangePlannerUrl(item)}
             target="_blank"

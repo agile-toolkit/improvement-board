@@ -5,11 +5,14 @@ import type { ImprovementItem, ImprovementStatus } from '../types'
 import ImprovementCard from './ImprovementCard'
 import AddItemModal from './AddItemModal'
 import { buildKanbanUrl } from '../utils/kanbanLink'
-import { ChartIcon, TargetIcon, CheckboxCheckedIcon, ClipboardIcon } from './icons'
+import { downloadCsv, buildMarkdownTable } from '../utils/csvExport'
+import { tagColorClasses } from '../utils/tagColor'
+import { ChartIcon, TargetIcon, CheckboxCheckedIcon, ClipboardIcon, DownloadIcon, TagIcon, RefreshIcon } from './icons'
 
 const COLUMNS: ImprovementStatus[] = ['identified', 'in_progress', 'done']
 const SPRINT_METRICS_URL = 'https://agile-toolkit.github.io/sprint-metrics/'
 const MOVING_MOTIVATORS_URL = 'https://agile-toolkit.github.io/moving-motivators/'
+const SCRUM_FACILITATOR_URL = 'https://agile-toolkit.github.io/scrum-facilitator/'
 
 type SortMode = 'default' | 'due' | 'stale' | 'votes'
 
@@ -26,18 +29,25 @@ interface Props {
   prefillTitle?: string
   fromSprintMetrics?: boolean
   fromMovingMotivators?: boolean
+  fromScrumFacilitator?: boolean
   currentSprint: number
   onEndSprint: () => void
 }
 
-export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue, onVote, onResetVotes, onBulkStatus, onBulkDelete, prefillTitle, fromSprintMetrics, fromMovingMotivators, currentSprint, onEndSprint }: Props) {
+export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue, onVote, onResetVotes, onBulkStatus, onBulkDelete, prefillTitle, fromSprintMetrics, fromMovingMotivators, fromScrumFacilitator, currentSprint, onEndSprint }: Props) {
   const { t } = useTranslation()
   const [showAdd, setShowAdd] = useState(false)
   const [sortMode, setSortMode] = useState<SortMode>('default')
   const [exportState, setExportState] = useState<'idle' | 'busy' | 'done'>('idle')
+  const [csvState, setCsvState] = useState<'idle' | 'done'>('idle')
+  const [textCopyState, setTextCopyState] = useState<'idle' | 'done'>('idle')
   const [selectMode, setSelectMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [tagFilter, setTagFilter] = useState<string | null>(null)
   const boardRef = useRef<HTMLDivElement>(null)
+
+  const allTags = Array.from(new Set(items.flatMap(i => i.tags ?? []))).sort()
+  const tagFilteredItems = tagFilter ? items.filter(i => i.tags?.includes(tagFilter)) : items
 
   useEffect(() => {
     if (prefillTitle) setShowAdd(true)
@@ -118,7 +128,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
   }
 
   const colItems = (status: ImprovementStatus) => {
-    const filtered = items.filter(i => i.status === status)
+    const filtered = tagFilteredItems.filter(i => i.status === status)
     if (sortMode === 'due') {
       return [...filtered].sort((a, b) => {
         if (a.dueDate && b.dueDate) return a.dueDate - b.dueDate
@@ -134,6 +144,24 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
       return [...filtered].sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
     }
     return filtered
+  }
+
+  // Same items and order the board currently shows, respecting the tag filter
+  // and sort mode — CSV/text export mirrors what's on screen.
+  const exportableItems = COLUMNS.flatMap(colItems)
+
+  function handleDownloadCsv() {
+    downloadCsv(exportableItems)
+    setCsvState('done')
+    setTimeout(() => setCsvState('idle'), 2000)
+  }
+
+  async function handleCopyText() {
+    try {
+      await navigator.clipboard.writeText(buildMarkdownTable(exportableItems))
+      setTextCopyState('done')
+      setTimeout(() => setTextCopyState('idle'), 2000)
+    } catch { /* clipboard unavailable — no-op */ }
   }
 
   return (
@@ -164,6 +192,44 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
           >
             {t('board.open_moving_motivators')}
           </a>
+        </div>
+      )}
+      {fromScrumFacilitator && (
+        <div className="mb-4 flex items-center gap-2 text-sm text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2">
+          <RefreshIcon className="w-4 h-4" />
+          <span>{t('board.from_scrum_facilitator')}</span>
+          <a
+            href={SCRUM_FACILITATOR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto underline hover:text-amber-900 text-xs"
+          >
+            {t('board.open_scrum_facilitator')}
+          </a>
+        </div>
+      )}
+      {allTags.length > 0 && (
+        <div className="mb-4 flex items-center gap-2 flex-wrap" role="group" aria-label={t('board.filter_by_tag')}>
+          <TagIcon className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setTagFilter(f => (f === tag ? null : tag))}
+              className={`text-xs px-2 py-0.5 rounded-full font-medium transition-all ${tagColorClasses(tag)} ${
+                tagFilter === tag ? 'ring-2 ring-brand-400' : tagFilter ? 'opacity-40' : ''
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+          {tagFilter && (
+            <button
+              onClick={() => setTagFilter(null)}
+              className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 underline"
+            >
+              {t('board.clear_tag_filter')}
+            </button>
+          )}
         </div>
       )}
       <div className="flex items-center justify-between mb-4">
@@ -237,6 +303,13 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
               : exportState === 'done'
               ? t('board.export_copied')
               : t('board.export_png')}
+          </button>
+          <button onClick={handleDownloadCsv} className="btn-secondary text-xs inline-flex items-center gap-1">
+            <DownloadIcon className="w-3.5 h-3.5" />
+            {csvState === 'done' ? t('board.export_csv_done') : t('board.export_csv')}
+          </button>
+          <button onClick={handleCopyText} className="btn-secondary text-xs">
+            {textCopyState === 'done' ? t('board.copy_text_done') : t('board.copy_text')}
           </button>
           {items.some(i => i.status === 'done') && (
             <button
@@ -323,6 +396,7 @@ export default function BoardView({ items, onAdd, onUpdate, onDelete, onDialogue
           onAdd={item => { onAdd(item); setShowAdd(false) }}
           onClose={() => setShowAdd(false)}
           initialTitle={prefillTitle}
+          existingItems={items}
         />
       )}
 
