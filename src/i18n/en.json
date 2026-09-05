@@ -81,6 +81,7 @@
     "reset_votes_confirm": "Reset all vote counts to zero?",
     "add_shortcut_hint": "Press N to add a new item",
     "promote_to_change_planner": "Promote to Change Planner",
+    "assess_with_mm": "Assess motivator impact with Moving Motivators",
     "select_items": "Select items",
     "select_item": "Select item",
     "selected_count": "{{count}} selected",

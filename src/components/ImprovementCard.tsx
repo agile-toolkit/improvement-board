@@ -4,8 +4,9 @@ import type { ImprovementItem } from '../types'
 import { getDueDateState, dueBadgeClasses, formatDueDate, getAgeState, ageDaysOld } from '../utils/dueDate'
 import { buildChangePlannerUrl } from '../utils/changePlannerLink'
 import { buildPokerUrl, getLastEstimate } from '../utils/planningPokerLink'
+import { buildMovingMotivatorsUrl } from '../utils/movingMotivatorsLink'
 import { tagColorClasses } from '../utils/tagColor'
-import { CloseIcon, ChatIcon, LinkIcon, CardsIcon } from './icons'
+import { CloseIcon, ChatIcon, LinkIcon, CardsIcon, TargetIcon } from './icons'
 
 const CATEGORY_COLORS: Record<string, string> = {
   process: 'bg-blue-100 text-blue-700',
@@ -180,6 +181,16 @@ export default function ImprovementCard({ item, onMoveForward, onDelete, onDialo
             className="text-gray-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
           >
             <LinkIcon className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href={buildMovingMotivatorsUrl(item.title)}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={t('board.assess_with_mm')}
+            aria-label={t('board.assess_with_mm')}
+            className="text-gray-400 dark:text-gray-500 hover:text-brand-600 transition-colors leading-none"
+          >
+            <TargetIcon className="w-3.5 h-3.5" />
           </a>
           <button
             onClick={onVote}

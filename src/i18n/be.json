@@ -81,6 +81,7 @@
     "reset_votes_confirm": "Скінуць усе лічыльнікі галасоў да нуля?",
     "add_shortcut_hint": "Націсніце N для дадання элемента",
     "promote_to_change_planner": "Прасунуць у Change Planner",
+    "assess_with_mm": "Ацаніць уплыў на матывацыю праз Moving Motivators",
     "select_items": "Абраць элементы",
     "select_item": "Абраць элемент",
     "selected_count": "{{count}} абрана",

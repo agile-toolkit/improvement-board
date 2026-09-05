@@ -81,6 +81,7 @@
     "reset_votes_confirm": "¿Restablecer todos los conteos de votos a cero?",
     "add_shortcut_hint": "Pulsa N para añadir un elemento",
     "promote_to_change_planner": "Promover a Change Planner",
+    "assess_with_mm": "Evaluar el impacto motivacional con Moving Motivators",
     "select_items": "Seleccionar elementos",
     "select_item": "Seleccionar elemento",
     "selected_count": "{{count}} seleccionado(s)",
