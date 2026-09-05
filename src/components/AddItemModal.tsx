@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImprovementItem, Category } from '../types'
 import { readMovingMotivatorsSession, bottomMotivators, MOTIVATOR_EMOJI } from '../utils/movingMotivatorsImport'
-import { RefreshIcon } from './icons'
+import { readScrumFacilitatorActionItems } from '../utils/scrumFacilitatorImport'
+import { tagColorClasses } from '../utils/tagColor'
+import { RefreshIcon, CloseIcon } from './icons'
 
 const CATEGORIES: Category[] = ['process', 'technical', 'people', 'product', 'other']
 
@@ -12,9 +14,10 @@ interface Props {
   onAdd: (item: ImprovementItem) => void
   onClose: () => void
   initialTitle?: string
+  existingItems: ImprovementItem[]
 }
 
-export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
+export default function AddItemModal({ onAdd, onClose, initialTitle, existingItems }: Props) {
   const { t } = useTranslation()
   const [title, setTitle] = useState(initialTitle ?? '')
   const [description, setDescription] = useState('')
@@ -22,9 +25,21 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
   const [owner, setOwner] = useState('')
   const [copilot, setCopilot] = useState('')
   const [dueDateStr, setDueDateStr] = useState('')
+  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
   const [mmSession] = useState(() => readMovingMotivatorsSession())
   const [showMmImport, setShowMmImport] = useState(false)
+  const [sfSuggestions] = useState(() => readScrumFacilitatorActionItems(existingItems.map(i => i.title)))
+  const [showSfImport, setShowSfImport] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
+
+  const existingTags = Array.from(new Set(existingItems.flatMap(i => i.tags ?? []))).sort()
+
+  const commitTagInput = () => {
+    const trimmed = tagInput.trim()
+    if (trimmed && !tags.includes(trimmed)) setTags([...tags, trimmed])
+    setTagInput('')
+  }
 
   useEffect(() => {
     const el = dialogRef.current
@@ -64,6 +79,7 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
       updatedAt: Date.now(),
       dialogueNotes: '',
       dueDate,
+      tags: tags.length > 0 ? tags : undefined,
     })
   }
 
@@ -71,6 +87,11 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
     const name = t(`motivators.${id}`)
     setTitle(t('add_form.import_mm.suggestion_title', { motivator: name }))
     setDescription(t('add_form.import_mm.suggestion_description', { motivator: name, rank }))
+  }
+
+  const applySfSuggestion = (suggestionTitle: string, suggestionDescription: string) => {
+    setTitle(suggestionTitle)
+    setDescription(suggestionDescription)
   }
 
   return (
@@ -164,6 +185,45 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
               />
             </div>
 
+            <div>
+              <label className="label">{t('add_form.label_tags')}</label>
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-1.5">
+                  {tags.map(tag => (
+                    <span
+                      key={tag}
+                      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium ${tagColorClasses(tag)}`}
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => setTags(tags.filter(t2 => t2 !== tag))}
+                        aria-label={t('add_form.remove_tag', { tag })}
+                        className="hover:opacity-70"
+                      >
+                        <CloseIcon className="w-2.5 h-2.5" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <input
+                className="input"
+                list="tag-suggestions"
+                placeholder={t('add_form.tags_placeholder')}
+                value={tagInput}
+                onChange={e => setTagInput(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); commitTagInput() }
+                }}
+                onBlur={commitTagInput}
+              />
+              <datalist id="tag-suggestions">
+                {existingTags.map(tag => <option key={tag} value={tag} />)}
+              </datalist>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{t('add_form.tags_hint')}</p>
+            </div>
+
             {mmSession && (
               <div className="rounded-lg border border-gray-200 dark:border-gray-700">
                 <button
@@ -187,6 +247,38 @@ export default function AddItemModal({ onAdd, onClose, initialTitle }: Props) {
                           className="px-3 py-1 rounded-lg text-xs font-medium border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                         >
                           {MOTIVATOR_EMOJI[id] ?? ''} {t(`motivators.${id}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {sfSuggestions.length > 0 && (
+              <div className="rounded-lg border border-gray-200 dark:border-gray-700">
+                <button
+                  type="button"
+                  onClick={() => setShowSfImport(v => !v)}
+                  aria-expanded={showSfImport}
+                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
+                >
+                  <span className="inline-flex items-center gap-1"><RefreshIcon className="w-3.5 h-3.5" /> {t('add_form.import_sf.toggle')}</span>
+                  <span>{showSfImport ? '−' : '+'}</span>
+                </button>
+                {showSfImport && (
+                  <div className="px-3 pb-3 space-y-2">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t('add_form.import_sf.hint')}</p>
+                    <div className="space-y-1.5">
+                      {sfSuggestions.map(s => (
+                        <button
+                          key={s.title}
+                          type="button"
+                          onClick={() => applySfSuggestion(s.title, s.description)}
+                          className="w-full text-left px-3 py-1.5 rounded-lg text-xs border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                        >
+                          <span className="font-medium text-gray-800 dark:text-gray-200">{s.title}</span>
+                          {s.description && <span className="text-gray-400 dark:text-gray-500"> — {s.description}</span>}
                         </button>
                       ))}
                     </div>

@@ -10,6 +10,7 @@
     "team": "Team",
     "dialogue": "Dialogue",
     "timer": "Problem Time",
+    "history": "History",
     "learn": "Learn"
   },
   "kanban": {
@@ -91,7 +92,18 @@
     "delete_selected": "Delete selected",
     "delete_selected_confirm": "Delete {{count}} selected item(s)?",
     "edit_title": "Edit title",
-    "edit_title_hint": "Double-click to edit"
+    "edit_title_hint": "Double-click to edit",
+    "estimate_in_poker": "Estimate in Planning Poker",
+    "effort_badge": "{{sp}} SP",
+    "effort_badge_tooltip": "Last estimate from Planning Poker",
+    "from_scrum_facilitator": "Opened from Scrum Facilitator — your improvement item is pre-filled.",
+    "open_scrum_facilitator": "Open Scrum Facilitator",
+    "export_csv": "Download CSV",
+    "export_csv_done": "Downloaded!",
+    "copy_text": "Copy as text",
+    "copy_text_done": "Copied!",
+    "filter_by_tag": "Filter by tag",
+    "clear_tag_filter": "Clear tag filter"
   },
   "add_form": {
     "title": "New Improvement Item",
@@ -105,6 +117,10 @@
     "placeholder_description": "Describe the problem or opportunity...",
     "placeholder_owner": "Who owns this?",
     "placeholder_copilot": "Who will coach?",
+    "label_tags": "Tags (optional)",
+    "tags_placeholder": "Type a tag, then Enter or comma",
+    "tags_hint": "Cross-cutting themes like \"Q2 OKR\" or \"tech-debt\" — press Enter or comma to add.",
+    "remove_tag": "Remove tag {{tag}}",
     "submit": "Add to Board",
     "cancel": "Cancel",
     "categories": {
@@ -119,6 +135,10 @@
       "hint": "Your team's lowest-scoring motivators from the last session. Click one to pre-fill an improvement item.",
       "suggestion_title": "Improve {{motivator}}",
       "suggestion_description": "Team ranked {{motivator}} {{rank}} of 10 in the latest Moving Motivators session."
+    },
+    "import_sf": {
+      "toggle": "Import from Scrum Facilitator",
+      "hint": "Action items from your latest retro. Click one to pre-fill an improvement item."
     }
   },
   "motivators": {
@@ -170,6 +190,18 @@
     "step4": "Team asks clarifying questions only.",
     "step5": "Last 3 min: agree on one next action.",
     "step6": "Update the board with the outcome."
+  },
+  "history": {
+    "title": "Sprint History",
+    "empty": "No sprint history yet — use End Sprint to archive your first sprint.",
+    "chart_title": "Items completed per sprint",
+    "bar_tooltip": "Sprint {{n}}: {{count}} completed",
+    "breakdown_title": "Category breakdown",
+    "sprint_column": "Sprint",
+    "sprint_n": "Sprint {{n}}",
+    "total": "Total",
+    "trend": "Trend",
+    "no_change": "No change"
   },
   "learn": {
     "title": "About Improvement Practices",

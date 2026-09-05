@@ -10,6 +10,7 @@
     "team": "Каманда",
     "dialogue": "Дыялог",
     "timer": "Час Праблемы",
+    "history": "Гісторыя",
     "learn": "Навучанне"
   },
   "kanban": {
@@ -91,7 +92,18 @@
     "delete_selected": "Выдаліць абраныя",
     "delete_selected_confirm": "Выдаліць {{count}} абраны(х) элемент(аў)?",
     "edit_title": "Рэдагаваць загаловак",
-    "edit_title_hint": "Двайны клік для рэдагавання"
+    "edit_title_hint": "Двайны клік для рэдагавання",
+    "estimate_in_poker": "Ацаніць у Planning Poker",
+    "effort_badge": "{{sp}} SP",
+    "effort_badge_tooltip": "Апошняя ацэнка з Planning Poker",
+    "from_scrum_facilitator": "Адкрыта з Scrum Facilitator — ваш элемент паляпшэння запоўнены загадзя.",
+    "open_scrum_facilitator": "Адкрыць Scrum Facilitator",
+    "export_csv": "Спампаваць CSV",
+    "export_csv_done": "Спампавана!",
+    "copy_text": "Скапіяваць як тэкст",
+    "copy_text_done": "Скапіявана!",
+    "filter_by_tag": "Фільтр па тэгу",
+    "clear_tag_filter": "Ачысціць фільтр па тэгу"
   },
   "add_form": {
     "title": "Новы Элемент Паляпшэння",
@@ -105,6 +117,10 @@
     "placeholder_description": "Апішыце праблему або магчымасць...",
     "placeholder_owner": "Хто адказвае за гэта?",
     "placeholder_copilot": "Хто будзе трэнерам?",
+    "label_tags": "Тэгі (неабавязкова)",
+    "tags_placeholder": "Увядзіце тэг, затым Enter або коску",
+    "tags_hint": "Скразныя тэмы, напрыклад \"OKR Q2\" ці \"тэхнічны доўг\" — Enter або коска дадае тэг.",
+    "remove_tag": "Выдаліць тэг {{tag}}",
     "submit": "Дадаць на Дошку",
     "cancel": "Адмяніць",
     "categories": {
@@ -119,6 +135,10 @@
       "hint": "Матыватары вашай каманды з найніжэйшым балам за апошнюю сесію. Націсніце на адзін, каб папярэдне запоўніць элемент паляпшэння.",
       "suggestion_title": "Паляпшыць {{motivator}}",
       "suggestion_description": "Каманда паставіла «{{motivator}}» на {{rank}}-е месца з 10 у апошняй сесіі Moving Motivators."
+    },
+    "import_sf": {
+      "toggle": "Імпарт з Scrum Facilitator",
+      "hint": "Элементы дзеянняў з вашай апошняй рэтра. Націсніце на адзін, каб папярэдне запоўніць элемент паляпшэння."
     }
   },
   "motivators": {
@@ -170,6 +190,18 @@
     "step4": "Каманда задае толькі ўдакладняючыя пытанні.",
     "step5": "Апошнія 3 хв: дамовіцеся аб адным наступным дзеянні.",
     "step6": "Абнавіце дошку з вынікам."
+  },
+  "history": {
+    "title": "Гісторыя спрынтаў",
+    "empty": "Пакуль няма гісторыі спрынтаў — выкарыстайце «Завяршыць спрынт», каб архіваваць першы спрынт.",
+    "chart_title": "Завершаныя элементы па спрынтах",
+    "bar_tooltip": "Спрынт {{n}}: завершана {{count}}",
+    "breakdown_title": "Разбіўка па катэгорыях",
+    "sprint_column": "Спрынт",
+    "sprint_n": "Спрынт {{n}}",
+    "total": "Разам",
+    "trend": "Тэндэнцыя",
+    "no_change": "Без змен"
   },
   "learn": {
     "title": "Пра Практыкі Паляпшэння",
