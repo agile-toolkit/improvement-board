@@ -41,6 +41,6 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/improvement-board/',
+  base: './',
   build: { outDir: 'dist', sourcemap: true },
 })
