@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- **chore** (security): 0 `npm audit` vulnerabilities, down from 11. `vite` ^6.4.3 (patched dev-server path traversal / `fs.deny`
+  bypass) and `vitest` ^4.1.11 (patched `@vitest/mocker` arbitrary file
+  read); transitive fixes via `npm audit fix` (postcss, nanoid,
+  browserslist, @babel/core, brace-expansion, fast-uri, …).
+- **chore**: no more `npm warn deprecated` on install. `workbox-build`
+  (via `vite-plugin-pwa`, already at its latest 7.4.1) pins the deprecated
+  `glob@11` and `source-map@0.8.0-beta.0`; an `overrides` entry moves them
+  to `glob@13` and `source-map@0.7` (same `globSync` /
+  `SourceMapConsumer` APIs). The generated service worker precaches the
+  same files as before.
+
 - **perf**: `html2canvas` (~200 kB) is now loaded on demand when the image
   export is used, instead of shipping in the entry chunk to every visitor —
   the same treatment Planning Poker and Moving Motivators already use. Also
