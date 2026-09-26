@@ -43,6 +43,6 @@ export default defineConfig(({ mode }) => ({
       },
     }),
   ],
-  base: '/improvement-board/',
+  base: './',
   build: { outDir: 'dist', sourcemap: mode === 'debug' },
 }))
